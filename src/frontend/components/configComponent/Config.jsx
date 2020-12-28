@@ -20,19 +20,19 @@ export default props => {
                     <tbody>
                         <tr>
                             <td><b><label for="ipServerMQTT">IP servidor: </label></b></td>
-                            <td><input type="text" name="ipServerMQTT" value="192.168.0.1"></input></td>
+                            <td><input type="text" name="ipServerMQTT" value="192.168.0.1" className="inputDefault"></input></td>
                         </tr>
                         <tr>
                             <td> <b><label for="userServerMQTT">Usuário: </label></b></td>
-                            <td><input type="text" name="userServerMQTT" value="rasp_mqtt"></input></td>
+                            <td><input type="text" name="userServerMQTT" value="rasp_mqtt" className="inputDefault"></input></td>
                         </tr>
                         <tr>
                             <td><b><label for="passServerMQTT">Senha: </label></b></td>
-                            <td><input type="password" name="passServerMQTT" value="192.168.0.1"></input></td>
+                            <td><input type="password" name="passServerMQTT" value="192.168.0.1" className="inputDefault"></input></td>
                         </tr>
                         <tr>
                             <td><b><label for="topicServerMQTT">Tópico: </label></b></td>
-                            <td><input type="text" name="topicServerMQTT" value="/devices/notebook"></input></td>
+                            <td><input type="text" name="topicServerMQTT" value="/devices/notebook" className="inputDefault"></input></td>
                         </tr>
                     </tbody>
                 </table>
