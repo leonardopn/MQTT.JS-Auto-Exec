@@ -2,18 +2,17 @@
 import React from "react";
 import "./config.css"
 import Card from "../card/Card"
+import DivFlex from "../divFlex/DivFlex"
 import iconConfigDark from "../../img/config_dark_100.png"
 
 export default props => {
     return (
         <div id="divConfig">
 
-
-            <img src={iconConfigDark} className="icon" alt="config_icon"></img>
-            <h2>Configurações</h2>
-
-
-
+            <DivFlex>
+                <img src={iconConfigDark} className="iconM" alt="config_icon"></img>
+                <h2>Configurações</h2>
+            </DivFlex>
             <Card>
                 <h3>Servidor MQTT</h3>
                 <br></br>

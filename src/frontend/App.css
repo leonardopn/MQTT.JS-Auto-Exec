@@ -2,6 +2,9 @@
   width: 30px;
 }
 
+.iconM {
+  width: 50px;
+}
 .App {
   height        : 100vh;
   display       : flex;
