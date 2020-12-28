@@ -17,3 +17,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+input {
+  outline      : none;
+  border-radius: 5px;
+  padding      : 10px;
+  font-size: 20px;
+  color           : rgb(95, 95, 95);
+}

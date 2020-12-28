@@ -2,24 +2,43 @@
 import React from "react";
 import "./config.css"
 import Card from "../card/Card"
+import iconConfigDark from "../../img/config_dark_100.png"
 
 export default props => {
     return (
         <div id="divConfig">
+
+
+            <img src={iconConfigDark} className="icon" alt="config_icon"></img>
             <h2>Configurações</h2>
+
+
+
             <Card>
                 <h3>Servidor MQTT</h3>
-                <label for="ipServerMQTT">IP: </label>
-                <input type="text" name="ipServerMQTT"></input>
                 <br></br>
-                <label for="userServerMQTT">Usuário: </label>
-                <input type="text" name="userServerMQTT"></input>
-                <br></br>
-                <label for="passServerMQTT">Senha: </label>
-                <input type="password" name="passServerMQTT"></input>
-                <br></br>
-                <label for="topicServerMQTT">Tópico: </label>
-                <input type="text" name="topicServerMQTT"></input>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><b><label for="ipServerMQTT">IP servidor: </label></b></td>
+                            <td><input type="text" name="ipServerMQTT" value="192.168.0.1"></input></td>
+                        </tr>
+                        <tr>
+                            <td> <b><label for="userServerMQTT">Usuário: </label></b></td>
+                            <td><input type="text" name="userServerMQTT" value="rasp_mqtt"></input></td>
+                        </tr>
+                        <tr>
+                            <td><b><label for="passServerMQTT">Senha: </label></b></td>
+                            <td><input type="password" name="passServerMQTT" value="192.168.0.1"></input></td>
+                        </tr>
+                        <tr>
+                            <td><b><label for="topicServerMQTT">Tópico: </label></b></td>
+                            <td><input type="text" name="topicServerMQTT" value="/devices/notebook"></input></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button>Testar conexão</button>
+                <button>Salvar</button>
             </Card>
 
             <Card>
