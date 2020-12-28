@@ -11,7 +11,8 @@ function createWindow() {
     startServer().then(value => {
         console.log("Comandos carregados: " + value.payload.size + "\n");
         mainWindow = new BrowserWindow({ width: 800, height: 600 });
-        mainWindow.maximize()
+        mainWindow.setMaximumSize(800, 600)
+        mainWindow.setMinimumSize(800, 600)
 
         mainWindow.loadURL('http://localhost:3000');
 

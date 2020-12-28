@@ -1,12 +1,14 @@
 import './App.css';
-//const startServer = require("./backend/index")
+import NavBar from "./components/navBar/NavBar"
+import Terminal from "./components/terminal/Terminal"
 
 function App() {
-  return (
-    <div>
-      <h1>Olá mundo 2!</h1>
-    </div>
-  );
+	return (
+		<div className="App">
+			<NavBar></NavBar>
+			<Terminal></Terminal>
+		</div>
+	);
 }
 
 export default App;

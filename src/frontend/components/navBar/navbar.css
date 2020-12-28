@@ -1,0 +1,29 @@
+.navbar {
+    background-color  : #4E4E4E;
+    -webkit-box-shadow: 0px 2px 4px 0px rgba(50, 50, 50, 1);
+    -moz-box-shadow   : 0px 2px 4px 0px rgba(50, 50, 50, 1);
+    box-shadow        : 0px 2px 4px 0px rgba(50, 50, 50, 1);
+    margin-bottom     : 5px;
+}
+
+.tableNavbar button {
+    padding   : 10px;
+    background: transparent;
+    border    : none;
+    outline   : none;
+    transition: 0.3s;
+}
+
+.tableNavbar button:hover {
+    background-color: rgb(95, 95, 95);
+    transition      : 0.3s;
+}
+
+.tableNavbar button:active {
+    background-color: rgb(0, 140, 255);
+    transition      : 0.3s;
+}
+
+.tableNavbar #buttonActive {
+    background-color: rgb(0, 140, 255);
+}
