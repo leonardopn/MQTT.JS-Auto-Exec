@@ -1,9 +1,9 @@
 import React from "react";
-import "./card.css"
+import "./mainContent.css"
 
 export default props =>{
     return (
-        <div className="cardDefault">
+        <div className="mainContent">
             {props.children}
         </div>
     )

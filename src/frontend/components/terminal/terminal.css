@@ -1,9 +1,5 @@
-.terminal {
-    flex            : 1;
-    background-color: #F5F6FA;
-}
 
-.terminal #textAreaTerminal {
+#textAreaTerminal {
     padding           : 20px;
     margin            : 30px;
     width             : 92%;

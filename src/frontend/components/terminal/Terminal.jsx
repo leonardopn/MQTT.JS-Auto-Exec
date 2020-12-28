@@ -17,10 +17,8 @@ export default props => {
     let valor = (generateDate() + `Algum comando`)
 
     return (
-        <div className="terminal">
-            <textarea id="textAreaTerminal">
-                {valor}
-            </textarea>
-        </div>
+        <textarea id="textAreaTerminal">
+            {valor}
+        </textarea>
     )
 }

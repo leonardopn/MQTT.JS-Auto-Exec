@@ -2,6 +2,7 @@ import React from "react";
 import "./navbar.css"
 import iconConsoleWhite from "../../img/console_white_100.png"
 import iconEnterKeyWhite from "../../img/enter_key_white_100.png"
+import iconConfigWhite from "../../img/config_white_100.png"
 
 export default props => {
 
@@ -18,7 +19,8 @@ export default props => {
                 <tbody>
                     <tr>
                         <td> <button id="buttonActive" onClick={e => changeButtonDefault(e)}><img src={iconConsoleWhite} className="icon" alt="Console_icon"></img></button></td>
-                        <td> <button id="buttonNormal" onClick={e => changeButtonDefault(e)}><img src={iconEnterKeyWhite} className="icon" alt="Console_icon"></img></button></td>
+                        <td> <button id="buttonNormal" onClick={e => changeButtonDefault(e)}><img src={iconEnterKeyWhite} className="icon" alt="Enter_key_icon"></img></button></td>
+                        <td> <button id="buttonNormal" onClick={e => changeButtonDefault(e)}><img src={iconConfigWhite} className="icon" alt="Config_icon"></img></button></td>
                     </tr>
                 </tbody>
             </table>
