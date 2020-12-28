@@ -4,7 +4,8 @@ const { deleteCommand,
     updateCommand,
     getCommands,
     createFileCommand,
-    executeCommand } = require("../utils/DriveUtils")
+    executeCommand,
+    getConfig } = require("../utils/DriveUtils")
 
 router.get('/getCommands', function (_, res) {
     getCommands().then(value => {
@@ -69,6 +70,19 @@ router.get('/execCommand/:id', function (req, res) {
             res.send(error.payload).status(404);
         }
     });
+});
+
+router.get('/getConfig', function (_, res) {
+    getConfig().then(value => {
+        res.send(value.payload).status(200);
+    }).catch(error => {
+        if (error.type === "ERRO") {
+            res.send(error.payload.message).status(404);
+        }
+        if (error.type === "WARNING") {
+            res.send(error.payload).status(404);
+        }
+    })
 });
 
 module.exports = router;

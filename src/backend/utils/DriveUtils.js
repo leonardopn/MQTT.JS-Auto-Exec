@@ -169,4 +169,27 @@ function executeCommand(id) {
     })
 }
 
-module.exports = { loadCommands, createFileCommand, getCommands, deleteCommand, updateCommand, executeCommand };
+function getConfig() {
+    return new Promise((resolve, reject) => {
+        fs.readFile(folderApp + "config.json", (error, data) => {
+            try {
+                if (error) {
+                    reject({ type: "ERRO", payload: error })
+                }
+
+                let json = JSON.parse(data);
+                if (json.topic && json.serverIp && json.user && json.pass && json.startup) {
+                    resolve({ type: "OK", payload: json })
+                }
+                else {
+                    reject({ type: "WARNING", payload: `<p>WARNING - Informações faltantes</p>` });
+                }
+            } catch (error) {
+                reject({ type: "ERRO", payload: error })
+            }
+        });
+
+    })
+}
+
+module.exports = { loadCommands, createFileCommand, getCommands, deleteCommand, updateCommand, executeCommand, getConfig };
