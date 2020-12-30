@@ -1,5 +1,5 @@
 {
-  "name": "mqtt-js",
+  "name": "mqtt-automation-js",
   "version": "0.1.0",
   "private": true,
   "main": "./public/electron.js",
