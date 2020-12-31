@@ -199,7 +199,7 @@ function getConfig() {
                 }
 
                 let json = JSON.parse(data);
-                if (json.topic && json.serverIp && json.user && json.pass && json.startup) {
+                if (json.topic && json.serverIp && json.user && json.pass && json.startup ? json.startup : true) {
                     resolve({ type: "OK", payload: json })
                 }
                 else {

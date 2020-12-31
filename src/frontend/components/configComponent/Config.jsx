@@ -46,16 +46,11 @@ const Config = props => {
                 </table>
                 <button>Testar conexão</button>
                 <button>Salvar</button>
-                <p>{props.ip}</p>
-                <p>{props.user}</p>
-                <p>{props.pass}</p>
-                <p>{props.topic}</p>
-                <p>{props.startup}</p>
             </Card>
             <Card>
                 <h3>Cliente</h3>
                 <label htmlFor="checkBoxOpenStartupSystem">Abrir com o sistema: </label>
-                <input type="checkbox" name="checkBoxOpenStartupSystem" value={props.startup} onChange={e => props.updateStartUp(e.target.value)}></input>
+                <input type="checkbox" name="checkBoxOpenStartupSystem" onChange={e => props.updateStartUp(e.target.checked)} checked={props.startup}></input>
             </Card>
         </div>
     )

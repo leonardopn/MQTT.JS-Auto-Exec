@@ -4,6 +4,7 @@ import types from "./types"
 function getConfigFromAPI() {
     return new Promise((resolve, reject) => {
         axios.get("http://localhost:8888/getConfig").then(value => {
+            console.log(value.data);
             resolve(value.data);
         });
     })
@@ -45,6 +46,7 @@ export function updateTopic(value) {
 }
 
 export function updateStartUp(value) {
+    console.log(value);
     return {
         type: types.UPDATE_STARTUP_CONFIG,
         payload: value
