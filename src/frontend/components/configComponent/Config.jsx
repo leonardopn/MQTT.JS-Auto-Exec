@@ -1,21 +1,17 @@
 
-import React, { useState } from "react";
-import axios from "axios";
+import React from "react";
 import "./config.css"
 import Card from "../card/Card"
 import DivFlex from "../divFlex/DivFlex"
 import iconConfigDark from "../../img/config_dark_100.png"
 import { connect } from "react-redux";
-import { getConfig } from "../../store/actions/configs"
+import { getConfig, updateIpConfig, updatePass, updateStartUp, updateUser, updateTopic} from "../../store/actions/configs"
 
 const Config = props => {
-    let valor = "";
-    function getConfig() {
-        axios.get("http://localhost:8888/getConfig").then(value => {
-            valor = value.data.serverIp
-        });
-    }
-    getConfig();
+    
+    React.useEffect(() => {
+        props.getConfig();
+    }, []);
 
 
     return (
@@ -31,31 +27,34 @@ const Config = props => {
                     <tbody>
                         <tr>
                             <td><b><label for="ipServerMQTT">IP servidor: </label></b></td>
-                            <td><input type="text" name="ipServerMQTT" value={props.ip} className="inputDefault"></input></td>
+                            <td><input type="text" name="ipServerMQTT" value={props.ip} className="inputDefault" onChange={e => props.updateIp(e.target.value)}></input></td>
                         </tr>
                         <tr>
                             <td> <b><label for="userServerMQTT">Usuário: </label></b></td>
-                            <td><input type="text" name="userServerMQTT" value={props.user} className="inputDefault"></input></td>
+                            <td><input type="text" name="userServerMQTT" value={props.user} className="inputDefault" onChange={e => props.updateUser(e.target.value)}></input></td>
                         </tr>
                         <tr>
                             <td><b><label for="passServerMQTT">Senha: </label></b></td>
-                            <td><input type="password" name="passServerMQTT" value={props.pass} className="inputDefault"></input></td>
+                            <td><input type="password" name="passServerMQTT" value={props.pass} className="inputDefault" onChange={e => props.updatePass(e.target.value)}></input></td>
                         </tr>
                         <tr>
                             <td><b><label for="topicServerMQTT">Tópico: </label></b></td>
-                            <td><input type="text" name="topicServerMQTT" value={props.topic} className="inputDefault"></input></td>
+                            <td><input type="text" name="topicServerMQTT" value={props.topic} className="inputDefault" onChange={e => props.updateTopic(e.target.value)}></input></td>
                         </tr>
                     </tbody>
                 </table>
                 <button>Testar conexão</button>
-                <button onClick={e => getConfig()}>Salvar</button>
+                <button>Salvar</button>
                 <p>{props.ip}</p>
+                <p>{props.user}</p>
+                <p>{props.pass}</p>
+                <p>{props.topic}</p>
+                <p>{props.startup}</p>
             </Card>
-
             <Card>
                 <h3>Cliente</h3>
                 <label for="checkBoxOpenStartupSystem">Abrir com o sistema: </label>
-                <input type="checkbox" name="checkBoxOpenStartupSystem" value={props.startup}></input>
+                <input type="checkbox" name="checkBoxOpenStartupSystem" value={props.startup} onChange={e => props.updateStartUp(e.target.value)}></input>
             </Card>
         </div>
     )
@@ -76,6 +75,29 @@ const mapDispatchToProps = dispatch => {
         {
             getConfig() {
                 const action = getConfig();
+                action.payload.then(value => {
+                    action.payload = value;
+                    dispatch(action);
+                })
+            },
+            updateIp(value) {
+                const action = updateIpConfig(value);
+                dispatch(action);
+            },
+            updateUser(value) {
+                const action = updateUser(value);
+                dispatch(action);
+            },
+            updatePass(value) {
+                const action = updatePass(value);
+                dispatch(action);
+            },
+            updateTopic(value) {
+                const action = updateTopic(value);
+                dispatch(action);
+            },
+            updateStartUp(value) {
+                const action = updateStartUp(value);
                 dispatch(action);
             }
         }
