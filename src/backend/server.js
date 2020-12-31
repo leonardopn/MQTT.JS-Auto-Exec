@@ -2,7 +2,7 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const cors = require('cors');
 const router = require('./config/routes');
-const loadCommands = require('./utils/DriveUtils').loadCommands
+const { loadCommands, createFoldersApp } = require('./utils/DriveUtils')
 
 const server = express();
 
@@ -21,12 +21,17 @@ const porta = 8888;
 
 function loadDb() {
     return new Promise((resolve, reject) => {
-        loadCommands().then(value => {
-            global.commands = value.payload;
-            resolve(value)
-        }).catch(error => {
-            reject(error)
-        });
+        createFoldersApp().then(value => {
+            console.log(value.payload);
+            loadCommands().then(value => {
+                global.commands = value.payload;
+                resolve(value)
+            }).catch(error => {
+                reject(error)
+            });
+        }).catch(e => {
+            reject(e)
+        })
     })
 }
 

@@ -5,15 +5,36 @@ const Command = require("../model/entities/Command")
 const folderApp = home + "/.mqtt_js/";
 
 function createFoldersApp() {
-    if (!fs.existsSync(folderApp)) {
-        fs.mkdirSync(folderApp);
-        if (!fs.existsSync(folderApp + ".mqtt_js/commands/")) {
-            fs.mkdirSync((home + ".mqtt_js/commands/"));
+    return new Promise((resolve, reject) => {
+        if (!fs.existsSync(folderApp)) {
+            fs.mkdir(folderApp, e => {
+                if (e) {
+                    reject({ type: "ERRO", payload: e })
+                }
+                fs.mkdir(folderApp + "commands/", error => {
+                    if (error) {
+                        reject({ type: "ERRO", payload: error })
+                    }
+                    resolve({ type: "OK", payload: "Pastas criadas!" })
+                });
+            })
         }
-    }
+        else {
+            if (!fs.existsSync(folderApp + "commands/")) {
+                fs.mkdir(folderApp + "commands/", error => {
+                    if (error) {
+                        reject({ type: "ERRO", payload: error })
+                    }
+                    resolve({ type: "OK", payload: "Pastas criadas!" })
+                });
+            }
+            else {
+                resolve({ type: "OK", payload: "Pastas encontradas!" })
+            }
+        }
+    })
 }
 
-createFoldersApp();
 
 function loadCommands() {
     return new Promise((resolve, reject) => {
@@ -192,4 +213,4 @@ function getConfig() {
     })
 }
 
-module.exports = { loadCommands, createFileCommand, getCommands, deleteCommand, updateCommand, executeCommand, getConfig };
+module.exports = { createFoldersApp, loadCommands, createFileCommand, getCommands, deleteCommand, updateCommand, executeCommand, getConfig };
