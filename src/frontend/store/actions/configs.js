@@ -4,8 +4,9 @@ import types from "./types"
 function getConfigFromAPI() {
     return new Promise((resolve, reject) => {
         axios.get("http://localhost:8888/getConfig").then(value => {
-            console.log(value.data);
             resolve(value.data);
+        }).catch(error => {
+            reject(error);
         });
     })
 }
@@ -14,6 +15,13 @@ export function getConfig() {
     return {
         type: types.GET_CONFIG,
         payload: getConfigFromAPI()
+    }
+}
+
+export function problemGetConfig(e) {
+    return {
+        type: types.PROBLEM_GET_CONFIG,
+        payload: e
     }
 }
 

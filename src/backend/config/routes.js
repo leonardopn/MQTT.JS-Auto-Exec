@@ -74,13 +74,13 @@ router.get('/execCommand/:id', function (req, res) {
 
 router.get('/getConfig', function (_, res) {
     getConfig().then(value => {
-        res.send(value.payload).status(200);
+        res.status(200).send(value.payload);
     }).catch(error => {
         if (error.type === "ERRO") {
-            res.send(error.payload.message).status(404);
+            res.status(404).send(error);
         }
         if (error.type === "WARNING") {
-            res.send(error.payload).status(404);
+            res.status(500).send(error);
         }
     })
 });

@@ -5,7 +5,7 @@ import Card from "../card/Card"
 import DivFlex from "../divFlex/DivFlex"
 import iconConfigDark from "../../img/config_dark_100.png"
 import { connect } from "react-redux";
-import { getConfig, updateIpConfig, updatePass, updateStartUp, updateUser, updateTopic } from "../../store/actions/configs"
+import { getConfig, updateIpConfig, updatePass, updateStartUp, updateUser, updateTopic, problemGetConfig } from "../../store/actions/configs"
 
 const Config = props => {
 
@@ -17,6 +17,7 @@ const Config = props => {
 
     return (
         <div id="divConfig">
+            <p className="problem"><b>{props.problem.message}</b></p>
             <DivFlex>
                 <img src={iconConfigDark} className="iconM" alt="config_icon"></img>
                 <h2>Configurações</h2>
@@ -58,6 +59,7 @@ const Config = props => {
 
 const mapStateToProps = state => {
     return {
+        problem: state.configs.problem,
         ip: state.configs.serverIp,
         user: state.configs.user,
         pass: state.configs.pass,
@@ -74,6 +76,9 @@ const mapDispatchToProps = dispatch => {
                 action.payload.then(value => {
                     action.payload = value;
                     dispatch(action);
+                }).catch(error => {
+                    const actionProblem = problemGetConfig("ATENÇÃO - Servidor não tratou bem a requisição, configurações padrões carregadas!");
+                    dispatch(actionProblem);
                 })
             },
             updateIp(value) {

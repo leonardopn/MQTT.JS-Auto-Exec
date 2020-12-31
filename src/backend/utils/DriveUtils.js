@@ -199,11 +199,11 @@ function getConfig() {
                 }
 
                 let json = JSON.parse(data);
-                if (json.topic && json.serverIp && json.user && json.pass && json.startup ? json.startup : true) {
+                if (json.topic && json.serverIp && json.user && json.pass && json.startup ? true : true) {
                     resolve({ type: "OK", payload: json })
                 }
                 else {
-                    reject({ type: "WARNING", payload: `<p>WARNING - Informações faltantes</p>` });
+                    reject({ type: "WARNING", payload: `WARNING - Informações faltantes` });
                 }
             } catch (error) {
                 reject({ type: "ERRO", payload: error })
