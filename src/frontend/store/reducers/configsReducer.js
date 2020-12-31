@@ -8,7 +8,7 @@ const initialState = {
     startup: "5"
 }
 
-export default function (state = initialState, action) {
+export default function configsReducer (state = initialState, action) {
     switch (action.type) {
         case types.GET_CONFIG:
             return {

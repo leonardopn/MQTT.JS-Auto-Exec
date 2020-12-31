@@ -4,7 +4,7 @@ import iconConsoleWhite from "../../img/console_white_100.png"
 import iconEnterKeyWhite from "../../img/enter_key_white_100.png"
 import iconConfigWhite from "../../img/config_white_100.png"
 
-export default props => {
+const NavBar = props => {
 
     function changeButtonDefault(event) {
         let buttonDefault = document.getElementById("buttonActive");
@@ -27,3 +27,5 @@ export default props => {
         </div>
     )
 }
+
+export default NavBar;

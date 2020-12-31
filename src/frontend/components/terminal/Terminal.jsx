@@ -2,7 +2,7 @@ import { Date } from "globalthis/implementation";
 import React from "react";
 import "./terminal.css"
 
-export default props => {
+const Terminal = props => {
     function generateDate() {
         let date = new Date();
         let day = date.getDate();
@@ -22,3 +22,5 @@ export default props => {
         </textarea>
     )
 }
+
+export default Terminal;
