@@ -1,11 +1,13 @@
 const express = require('express')
+const { configDefault, verificaObjetoDefault } = require("../config/defaultConfigs")
 const router = express.Router();
 const { deleteCommand,
     updateCommand,
     getCommands,
     createFileCommand,
     executeCommand,
-    getConfig } = require("../utils/DriveUtils")
+    getConfig,
+    updateConfig } = require("../utils/DriveUtils")
 
 router.get('/getCommands', function (_, res) {
     getCommands().then(value => {
@@ -83,6 +85,23 @@ router.get('/getConfig', function (_, res) {
             res.status(500).send(error);
         }
     })
+});
+
+router.put('/updateConfig', function (req, res) {
+    if (verificaObjetoDefault(configDefault, req.body)) {
+        updateConfig(req.body).then(value => {
+            res.status(200).send(value.payload);
+        }).catch(error => {
+            if (error.type === "ERRO") {
+                res.status(404).send(error.payload.message);
+            }
+            if (error.type === "WARNING") {
+                res.send(error.payload);
+            }
+        });
+    } else {
+        res.send({ type: "WARNING", payload: "Requisição com body vazio" });
+    }
 });
 
 module.exports = router;

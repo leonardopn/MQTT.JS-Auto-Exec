@@ -209,8 +209,18 @@ function getConfig() {
                 reject({ type: "ERRO", payload: error })
             }
         });
-
     })
 }
 
-module.exports = { createFoldersApp, loadCommands, createFileCommand, getCommands, deleteCommand, updateCommand, executeCommand, getConfig };
+function updateConfig(data) {
+    return new Promise((resolve, reject) => {
+        fs.writeFile(folderApp + "config.json", JSON.stringify(data), error => {
+            if (error) {
+                reject({ type: "ERRO", payload: error })
+            }
+            resolve({ type: "OK", payload: "STATUS_OK" });
+        })
+    });
+}
+
+module.exports = { updateConfig, createFoldersApp, loadCommands, createFileCommand, getCommands, deleteCommand, updateCommand, executeCommand, getConfig };

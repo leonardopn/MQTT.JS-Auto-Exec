@@ -4,6 +4,7 @@ import "./config.css"
 import Card from "../card/Card"
 import DivFlex from "../divFlex/DivFlex"
 import iconConfigDark from "../../img/config_dark_100.png"
+import axios from "axios";
 import { connect } from "react-redux";
 import { getConfig, updateIpConfig, updatePass, updateStartUp, updateUser, updateTopic, problemGetConfig } from "../../store/actions/configs"
 
@@ -14,6 +15,16 @@ const Config = props => {
     React.useEffect(() => {
         getConfig();
     }, [getConfig]);
+
+    function setConfig() {
+        let data = props.configs;
+        delete data.problem;
+        axios.put("http://localhost:8888/updateConfig", data).then(value => {
+            
+        }).catch(error => {
+            console.log(error);
+        })
+    }
 
     return (
         <div id="divConfig">
@@ -46,19 +57,20 @@ const Config = props => {
                     </tbody>
                 </table>
                 <button>Testar conexão</button>
-                <button>Salvar</button>
             </Card>
             <Card>
                 <h3>Cliente</h3>
                 <label htmlFor="checkBoxOpenStartupSystem">Abrir com o sistema: </label>
                 <input type="checkbox" name="checkBoxOpenStartupSystem" onChange={e => props.updateStartUp(e.target.checked)} checked={props.startup}></input>
             </Card>
+            <button onClick={_ => setConfig()}>Salvar</button>
         </div>
     )
 }
 
 const mapStateToProps = state => {
     return {
+        configs: state.configs,
         problem: state.configs.problem,
         ip: state.configs.serverIp,
         user: state.configs.user,
