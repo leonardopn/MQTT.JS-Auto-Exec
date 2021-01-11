@@ -28,7 +28,7 @@ const Config = props => {
 
     return (
         <div id="divConfig">
-            <p className="problem"><b>{props.problem.message}</b></p>
+            <b>{props.problem.message}</b>
             <DivFlex>
                 <img src={iconConfigDark} className="iconM" alt="config_icon"></img>
                 <h2>Configurações</h2>
@@ -90,7 +90,7 @@ const mapDispatchToProps = dispatch => {
                     action.payload = value;
                     dispatch(action);
                 }).catch(error => {
-                    const actionProblem = problemGetConfig("ATENÇÃO - Servidor não tratou bem a requisição, configurações padrões carregadas!");
+                    const actionProblem = problemGetConfig(<p className="problem">{"ERRO - " + error.payload}<br></br><br></br>{"Dados padrões serão carregados!"}</p>);
                     dispatch(actionProblem);
                 })
             },

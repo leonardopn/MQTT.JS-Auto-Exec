@@ -195,7 +195,7 @@ function getConfig() {
         fs.readFile(folderApp + "config.json", (error, data) => {
             try {
                 if (error) {
-                    reject({ type: "ERRO", payload: error })
+                    reject({ type: "ERRO", payload: error.message })
                 }
 
                 let json = JSON.parse(data);
@@ -205,8 +205,8 @@ function getConfig() {
                 else {
                     reject({ type: "WARNING", payload: `WARNING - Informações faltantes` });
                 }
-            } catch (error) {
-                reject({ type: "ERRO", payload: error })
+            } catch (e) {
+                reject({ type: "ERRO", payload: e.message })
             }
         });
     })
