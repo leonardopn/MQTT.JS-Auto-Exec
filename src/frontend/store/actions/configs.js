@@ -54,9 +54,15 @@ export function updateTopic(value) {
 }
 
 export function updateStartUp(value) {
-    console.log(value);
     return {
         type: types.UPDATE_STARTUP_CONFIG,
         payload: value
+    }
+}
+
+export function resetConfig() {
+    return {
+        type: types.RESET_CONFIG,
+        payload: ""
     }
 }

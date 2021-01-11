@@ -6,7 +6,7 @@ import DivFlex from "../divFlex/DivFlex"
 import iconConfigDark from "../../img/config_dark_100.png"
 import axios from "axios";
 import { connect } from "react-redux";
-import { getConfig, updateIpConfig, updatePass, updateStartUp, updateUser, updateTopic, problemGetConfig } from "../../store/actions/configs"
+import { getConfig, updateIpConfig, updatePass, updateStartUp, updateUser, resetConfig, updateTopic, problemGetConfig } from "../../store/actions/configs"
 
 const Config = props => {
 
@@ -64,6 +64,7 @@ const Config = props => {
                 <input type="checkbox" name="checkBoxOpenStartupSystem" onChange={e => props.updateStartUp(e.target.checked)} checked={props.startup}></input>
             </Card>
             <button onClick={_ => setConfig()}>Salvar</button>
+            <button onClick={_ => props.resetConfig()}>Configurações Padrão</button>
         </div>
     )
 }
@@ -89,7 +90,6 @@ const mapDispatchToProps = dispatch => {
                     action.payload = value;
                     dispatch(action);
                 }).catch(error => {
-                    //console.log(error);
                     const actionProblem = problemGetConfig("ATENÇÃO - Servidor não tratou bem a requisição, configurações padrões carregadas!");
                     dispatch(actionProblem);
                 })
@@ -112,6 +112,10 @@ const mapDispatchToProps = dispatch => {
             },
             updateStartUp(value) {
                 const action = updateStartUp(value);
+                dispatch(action);
+            },
+            resetConfig() {
+                const action = resetConfig();
                 dispatch(action);
             }
         }

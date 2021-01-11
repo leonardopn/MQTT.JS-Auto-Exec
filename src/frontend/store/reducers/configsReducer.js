@@ -52,6 +52,15 @@ export default function configsReducer(state = initialState, action) {
                 ...state,
                 user: action.payload
             };
+        case types.RESET_CONFIG:
+            return {
+                ...state,
+                serverIp: action.payload,
+                user: action.payload,
+                pass: action.payload,
+                topic: action.payload,
+                startup: false,
+            };
         default:
             return state;
     }
