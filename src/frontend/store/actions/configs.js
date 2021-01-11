@@ -5,8 +5,8 @@ function getConfigFromAPI() {
     return new Promise((resolve, reject) => {
         axios.get("http://localhost:8888/getConfig").then(value => {
             resolve(value.data);
-        }).catch(error => {
-            reject(error);
+        }).catch((error) => {
+            reject(error.response.data);
         });
     })
 }

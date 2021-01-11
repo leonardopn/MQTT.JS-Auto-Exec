@@ -89,6 +89,7 @@ const mapDispatchToProps = dispatch => {
                     action.payload = value;
                     dispatch(action);
                 }).catch(error => {
+                    //console.log(error);
                     const actionProblem = problemGetConfig("ATENÇÃO - Servidor não tratou bem a requisição, configurações padrões carregadas!");
                     dispatch(actionProblem);
                 })
