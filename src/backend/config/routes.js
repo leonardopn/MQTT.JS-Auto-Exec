@@ -90,17 +90,14 @@ router.get('/getConfig', function (_, res) {
 router.put('/updateConfig', function (req, res) {
     if (verificaObjetoDefault(configDefault, req.body)) {
         updateConfig(req.body).then(value => {
-            res.status(200).send(value.payload);
+            res.status(200).send(value);
         }).catch(error => {
             if (error.type === "ERRO") {
-                res.status(404).send(error.payload.message);
-            }
-            if (error.type === "WARNING") {
-                res.send(error.payload);
+                res.status(404).send(error);
             }
         });
     } else {
-        res.send({ type: "WARNING", payload: "Requisição com body vazio" });
+        res.status(404).send({ type: "WARNING", payload: "Requisição com body vazio" });
     }
 });
 

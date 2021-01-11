@@ -17,12 +17,12 @@ const Config = props => {
     }, [getConfig]);
 
     function setConfig() {
-        let data = props.configs;
-        delete data.problem;
+        let data = { ...props.configs };
+        delete data.problem;//Dando problema
         axios.put("http://localhost:8888/updateConfig", data).then(value => {
-            
+            console.log(value.data);
         }).catch(error => {
-            console.log(error);
+            console.log(error.response.data);
         })
     }
 
