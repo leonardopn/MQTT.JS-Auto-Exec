@@ -3,24 +3,45 @@ import "./navbar.css"
 import iconConsoleWhite from "../../img/console_white_100.png"
 import iconEnterKeyWhite from "../../img/enter_key_white_100.png"
 import iconConfigWhite from "../../img/config_white_100.png"
+import Terminal from "../terminal/Terminal"
+import Config from "../configComponent/Config"
+import { connect } from "react-redux";
+import { updateView } from "../../store/actions/views"
 
 const NavBar = props => {
 
-    function changeButtonDefault(event) {
-        let buttonDefault = document.getElementById("buttonActive");
-        buttonDefault.id = "buttonNormal";
-        event.currentTarget.id = "buttonActive";
+    function changeView(option) {
+        const terminal = <Terminal></Terminal>;
+        const config = <Config></Config>;
+        switch (option) {
+            case "TERMINAL":
+                props.updateView(terminal);
+                return;
+            case "CONFIG":
+                console.log(config);
+                props.updateView(config);
+                return;
+            default:
+                props.updateView(terminal);
+                return;
+        }
     }
 
+    function changeButtonDefault(value) {
+        let buttonDefault = document.getElementById("buttonActive");
+        buttonDefault.id = "buttonNormal";
+        value.event.currentTarget.id = "buttonActive";
+        changeView(value.option)
+    }
 
     return (
         <div className="navbar">
             <table className="tableNavbar">
                 <tbody>
                     <tr>
-                        <td> <button id="buttonActive" onClick={e => changeButtonDefault(e)}><img src={iconConsoleWhite} className="icon" alt="Console_icon"></img></button></td>
-                        <td> <button id="buttonNormal" onClick={e => changeButtonDefault(e)}><img src={iconEnterKeyWhite} className="icon" alt="Enter_key_icon"></img></button></td>
-                        <td> <button id="buttonNormal" onClick={e => changeButtonDefault(e)}><img src={iconConfigWhite} className="icon" alt="Config_icon"></img></button></td>
+                        <td> <button id="buttonActive" onClick={e => changeButtonDefault({event: e, option: "TERMINAL"})}><img src={iconConsoleWhite} className="icon" alt="Console_icon"></img></button></td>
+                        <td> <button id="buttonNormal" onClick={e => changeButtonDefault({event: e, option: "COMANDS"})}><img src={iconEnterKeyWhite} className="icon" alt="Enter_key_icon"></img></button></td>
+                        <td> <button id="buttonNormal" onClick={e => changeButtonDefault({event: e, option: "CONFIG"})}><img src={iconConfigWhite} className="icon" alt="Config_icon"></img></button></td>
                     </tr>
                 </tbody>
             </table>
@@ -28,4 +49,15 @@ const NavBar = props => {
     )
 }
 
-export default NavBar;
+const mapDispatchToProps = dispatch => {
+    return (
+        {
+            updateView(view) {
+                const action = updateView(view);
+                dispatch(action);
+            }
+        }
+    )
+}
+
+export default connect(null, mapDispatchToProps)(NavBar);//NOTE caso não mapeio o estado para props, usar null

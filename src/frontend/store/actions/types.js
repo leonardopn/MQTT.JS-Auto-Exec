@@ -7,6 +7,7 @@ const types = {
     UPDATE_TOPIC_CONFIG: "UPDATE_TOPIC_CONFIG",
     UPDATE_STARTUP_CONFIG: "UPDATE_STARTUP_CONFIG",
     RESET_CONFIG: "RESET_CONFIG",
+    SET_VIEW: " SET_VIEW",
 }
 
 export default types;

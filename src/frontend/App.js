@@ -1,21 +1,24 @@
 import './App.css';
 import NavBar from "./components/navBar/NavBar"
-//import Terminal from "./components/terminal/Terminal"
 import Config from "./components/configComponent/Config"
+import { connect } from "react-redux";
 import MainContent from "./components/mainContent/MainContent"
 
-function App() {
+const App = props => {
 	return (
 		<div className="App">
 			<NavBar></NavBar>
-			{/* <Card>
-				<Terminal></Terminal>
-			</Card> */}
 			<MainContent>
-				<Config></Config>
+				{props.view}
 			</MainContent>
 		</div>
 	);
 }
 
-export default App;
+const mapStateToProps = state => {
+    return {
+        view: state.view.selectedView
+    }
+}
+
+export default connect(mapStateToProps)(App);
