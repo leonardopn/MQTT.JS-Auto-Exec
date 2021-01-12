@@ -14,8 +14,6 @@ const Terminal = props => {
         return `(${day}/${month}/${year}) ${hour}:${minute} - `;
     }
 
-    let valor = (generateDate() + `Algum comando`)
-
     return (
         <textarea id="textAreaTerminal" defaultValue={props.textTextArea} readOnly>
         </textarea>

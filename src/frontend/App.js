@@ -1,6 +1,5 @@
 import './App.css';
 import NavBar from "./components/navBar/NavBar"
-import Config from "./components/configComponent/Config"
 import { connect } from "react-redux";
 import MainContent from "./components/mainContent/MainContent"
 
