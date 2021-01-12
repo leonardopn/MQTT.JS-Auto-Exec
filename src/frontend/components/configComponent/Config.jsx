@@ -8,6 +8,8 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { getConfig, updateIpConfig, updatePass, updateStartUp, updateUser, resetConfig, updateTopic, problemGetConfig } from "../../store/actions/configs"
 
+const { setLog } = require("../../../backend/utils/LogUtils")
+
 const Config = props => {
 
     const { getConfig } = props;
@@ -19,10 +21,10 @@ const Config = props => {
     function setConfig() {
         let data = { ...props.configs };
         delete data.problem;//Dando problema
-        axios.put("http://localhost:8888/updateConfig", data).then(value => {
-            console.log(value.data);
+        axios.put("http://localhost:8888/updateConfig", data).then(_ => {
+            setLog("Configurações salvas!");
         }).catch(error => {
-            console.log(error.response.data);
+            setLog(error.response.data.type + " - " + error.response.data.payload);
         })
     }
 
@@ -77,7 +79,7 @@ const mapStateToProps = state => {
         user: state.configs.user,
         pass: state.configs.pass,
         topic: state.configs.topic,
-        startup: state.configs.startup
+        startup: state.configs.startup,
     }
 }
 

@@ -1,10 +1,12 @@
 import { createStore, combineReducers } from "redux";
 import configsReducer from "./reducers/configsReducer"
 import viewReducer from "./reducers/viewReducer"
+import terminalReducer from "./reducers/terminalReducer"
 
 const reducers = combineReducers({
     configs: configsReducer,
-    view: viewReducer
+    view: viewReducer,
+    terminal: terminalReducer,
 })
 
 function storeConfig() {

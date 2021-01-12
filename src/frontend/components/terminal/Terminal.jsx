@@ -1,6 +1,6 @@
-import { Date } from "globalthis/implementation";
 import React from "react";
 import "./terminal.css"
+import { connect } from "react-redux"
 
 const Terminal = props => {
     function generateDate() {
@@ -17,10 +17,15 @@ const Terminal = props => {
     let valor = (generateDate() + `Algum comando`)
 
     return (
-        <textarea id="textAreaTerminal">
-            {valor}
+        <textarea id="textAreaTerminal" defaultValue={props.textTextArea} readOnly>
         </textarea>
     )
 }
 
-export default Terminal;
+const mapStateToProps = state => {
+    return {
+        textTextArea: state.terminal.textTextArea
+    }
+}
+
+export default connect(mapStateToProps)(Terminal);

@@ -18,7 +18,6 @@ const NavBar = props => {
                 props.updateView(terminal);
                 return;
             case "CONFIG":
-                console.log(config);
                 props.updateView(config);
                 return;
             default:
