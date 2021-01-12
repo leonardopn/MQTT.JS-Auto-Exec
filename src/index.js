@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import configStore from "./frontend/store/storeConfig"
 
 const store = configStore()
+export default store;;
 
 ReactDOM.render(
   <Provider store={store}>
@@ -15,3 +16,4 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
+
