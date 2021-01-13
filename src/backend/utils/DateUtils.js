@@ -5,6 +5,7 @@ export function generateDate() {
     let year = date.getFullYear()
     let hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
     let minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+    let seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
 
-    return `(${day}/${month}/${year}) ${hour}:${minute} - `;
+    return `(${day}/${month}/${year}) ${hour}:${minute}:${seconds} - `;
 }
