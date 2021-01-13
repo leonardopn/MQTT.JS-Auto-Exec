@@ -1,34 +1,3 @@
-#divConfig {
-    display       : flex;
-    flex-direction: column;
-    padding       : 20px;
-    margin        : 30px;
-    display       : block;
-    height        : 410px;
-    overflow      : auto;
-
-    border-radius   : 10px;
-    background-color: #fff;
-    color           : rgb(95, 95, 95);
-    font-size       : 20px;
-
-    -webkit-box-shadow: 0px 0px 3px 0px rgba(50, 50, 50, 1);
-    -moz-box-shadow   : 0px 0px 3px 0px rgba(50, 50, 50, 1);
-    box-shadow        : 0px 0px 3px 0px rgba(50, 50, 50, 1);
-}
-
-#divConfig h1,
-h2,
-h3 {
-    padding: 0;
-    margin : 0;
-}
-
-#divConfig td {
-    width  : 100%;
-    padding: 5px;
-}
-
-#divConfig .inputDefault {
-    width: 400px
+.inputDefault {
+    width: 450px
 }

@@ -5,6 +5,7 @@ import iconEnterKeyWhite from "../../img/enter_key_white_100.png"
 import iconConfigWhite from "../../img/config_white_100.png"
 import Terminal from "../terminal/Terminal"
 import Config from "../configComponent/Config"
+import Commands from "../commands/Commands"
 import { connect } from "react-redux";
 import { updateView } from "../../store/actions/views"
 
@@ -13,12 +14,16 @@ const NavBar = props => {
     function changeView(option) {
         const terminal = <Terminal></Terminal>;
         const config = <Config></Config>;
+        const commands = <Commands></Commands>;
         switch (option) {
             case "TERMINAL":
                 props.updateView(terminal);
                 return;
             case "CONFIG":
                 props.updateView(config);
+                return;
+            case "COMMANDS":
+                props.updateView(commands);
                 return;
             default:
                 props.updateView(terminal);
@@ -39,7 +44,7 @@ const NavBar = props => {
                 <tbody>
                     <tr>
                         <td> <button id="buttonActive" onClick={e => changeButtonDefault({event: e, option: "TERMINAL"})}><img src={iconConsoleWhite} className="icon" alt="Console_icon"></img></button></td>
-                        <td> <button id="buttonNormal" onClick={e => changeButtonDefault({event: e, option: "COMANDS"})}><img src={iconEnterKeyWhite} className="icon" alt="Enter_key_icon"></img></button></td>
+                        <td> <button id="buttonNormal" onClick={e => changeButtonDefault({event: e, option: "COMMANDS"})}><img src={iconEnterKeyWhite} className="icon" alt="Enter_key_icon"></img></button></td>
                         <td> <button id="buttonNormal" onClick={e => changeButtonDefault({event: e, option: "CONFIG"})}><img src={iconConfigWhite} className="icon" alt="Config_icon"></img></button></td>
                     </tr>
                 </tbody>

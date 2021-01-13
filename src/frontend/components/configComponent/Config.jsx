@@ -29,13 +29,13 @@ const Config = props => {
     }
 
     return (
-        <div id="divConfig">
+        <Card class="main" id="divConfig">
             <b>{props.problem.message}</b>
             <DivFlex>
                 <img src={iconConfigDark} className="iconM" alt="config_icon"></img>
                 <h2>Configurações</h2>
             </DivFlex>
-            <Card>
+            <Card class={"intern"}>
                 <h3>Servidor MQTT</h3>
                 <br></br>
                 <table>
@@ -60,14 +60,14 @@ const Config = props => {
                 </table>
                 <button>Testar conexão</button>
             </Card>
-            <Card>
+            <Card class={"intern"}>
                 <h3>Cliente</h3>
                 <label htmlFor="checkBoxOpenStartupSystem">Abrir com o sistema: </label>
                 <input type="checkbox" name="checkBoxOpenStartupSystem" onChange={e => props.updateStartUp(e.target.checked)} checked={props.startup}></input>
             </Card>
             <button onClick={_ => setConfig()}>Salvar</button>
             <button onClick={_ => props.resetConfig()}>Configurações Padrão</button>
-        </div>
+        </Card>
     )
 }
 
