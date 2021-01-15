@@ -9,7 +9,7 @@ function getCommandsFromAPI() {
     return new Promise((resolve, reject) => {
         axios.get("http://localhost:8888/getCommands").then(response => {
             response.data.forEach(command => {
-                arrayTemp.push(<Command key={command.id} id={command.id} name={command.name} command={command.command} folder={command.path}></Command>)
+                arrayTemp.push(<Command isNew={false} key={command.id} id={command.id} name={command.name} command={command.command} folder={command.path}></Command>)
             })
 
             if (arrayTemp.length < 1) {
