@@ -102,7 +102,7 @@ function createFileCommand(data) {
                 reject({ type: "WARNING", payload: `Comando: "${command.command}" já existe` });
             }
         } catch (error) {
-            reject({ type: "ERRO", payload: error });
+            reject({ type: "ERRO", payload: error.message });
         }
     });
 }
@@ -125,7 +125,7 @@ function deleteCommand(id) {
             if (valor) {
                 fs.unlink(valor.path, error => {
                     if (error) {
-                        reject({ type: "ERRO", payload: error });
+                        reject({ type: "ERRO", payload: error.message });
                     }
 
                     global.commands.delete(id);
@@ -133,10 +133,10 @@ function deleteCommand(id) {
                 })
             }
             else {
-                reject({ type: "WARNING", payload: "<p>ATENÇÃO: Valor não encontrado</p>" })
+                reject({ type: "WARNING", payload: "ATENÇÃO: Valor não encontrado!" })
             }
         } catch (error) {
-            reject({ type: "ERRO", payload: error })
+            reject({ type: "ERRO", payload: error.message })
         }
     })
 }

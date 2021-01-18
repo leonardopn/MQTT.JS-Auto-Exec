@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import Card from "../card/Card";
 import axios from "axios";
 import { connect } from "react-redux";
-import { getCommands } from "../../store/actions/commandsAction"
+import { getCommands } from "../../store/actions/commandsAction";
+import { setLog } from "../../../backend/utils/LogUtils"
 
 const Command = props => {
     let conteudoCommand = "";
@@ -18,20 +19,21 @@ const Command = props => {
             name: inputValueName,
             command: inputValueCommand
         };
-        axios.post("http://localhost:8888/addcommand", data).then(response => {
+        axios.post("http://localhost:8888/addcommand", data).then(_ => {
             props.getCommands();
             props.deleteNewCommand("");
+            setLog(`Comando "${data.name}" criado!`);
         }).catch(error => {
-            console.log(error.request.response);
+            setLog(JSON.parse(error.request.response).payload);
         })
     }
 
     function removeCommand() {
-        axios.delete("http://localhost:8888/deleteCommand/" + props.id).then(response => {
+        axios.delete("http://localhost:8888/deleteCommand/" + props.id).then(_ => {
             props.getCommands();
-            //props.deleteNewCommand("");
+            setLog(`Comando "${props.name}" excluído!`);
         }).catch(error => {
-            console.log(error.request.response);
+            setLog(JSON.parse(error.request.response).payload);
         })
     }
 

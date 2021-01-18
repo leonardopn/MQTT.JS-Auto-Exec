@@ -12,8 +12,7 @@ const Commands = props => {
     const getCommands = props.getCommands;
     React.useEffect(_ => {
         getCommands();
-        
-    }, []);//Passar um array vazio, faz essa função executar somente na montagem e desmontagem
+    }, [getCommands]);//Passar um array vazio, faz essa função executar somente na montagem e desmontagem
 
     function criarComando() {
         setNewCommand(<Command isNew={true} deleteNewCommand={setNewCommand}></Command>);
