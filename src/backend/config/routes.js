@@ -11,7 +11,7 @@ const { deleteCommand,
 
 router.get('/getCommands', function (_, res) {
     getCommands().then(value => {
-        res.send(value.payload).status(200);
+        res.status(200).send(value.payload);
     }).catch(error => {
         if (error.type === "ERRO") {
             res.status(404).send(error.payload.message);
@@ -24,7 +24,7 @@ router.get('/getCommands', function (_, res) {
 
 router.post('/addCommand', function (req, res) {
     createFileCommand(req.body).then(value => {
-        res.send(value.payload).status(200);
+        res.status(200).send(value.payload);
     }).catch(error => {
         if (error.type === "ERRO") {
             res.status(404).send(error);
@@ -37,13 +37,13 @@ router.post('/addCommand', function (req, res) {
 
 router.delete('/deleteCommand/:id', function (req, res) {
     deleteCommand(req.params.id).then(value => {
-        res.send(value.payload).status(200);
+        res.status(200).send(value.payload);
     }).catch(error => {
         if (error.type === "ERRO") {
-            res.send(error.payload.message).status(404);
+            res.status(404).send(error.payload.message);
         }
         if (error.type === "WARNING") {
-            res.send(error.payload).status(404);
+            res.status(404).send(error.payload);
         }
     })
 });
@@ -53,10 +53,10 @@ router.put('/updateCommand', function (req, res) {
         res.send(value.payload).status(200);
     }).catch(error => {
         if (error.type === "ERRO") {
-            res.send(error.payload.message).status(404);
+            res.status(404).send(error.payload.message);
         }
         if (error.type === "WARNING") {
-            res.send(error.payload).status(404);
+            res.status(404).send(error.payload);
         }
     });
 });
@@ -66,10 +66,10 @@ router.get('/execCommand/:id', function (req, res) {
         res.send(value.payload).status(200);
     }).catch(error => {
         if (error.type === "ERRO") {
-            res.send(error.payload.message).status(404);
+            res.status(404).send(error.payload.message);
         }
         if (error.type === "WARNING") {
-            res.send(error.payload).status(404);
+            res.status(404).send(error.payload);
         }
     });
 });
