@@ -95,11 +95,11 @@ function createFileCommand(data) {
                     })
                 }
                 else {
-                    reject({ type: "WARNING", payload: `<p>WARNING - Informações faltantes</p>` });
+                    reject({ type: "WARNING", payload: `WARNING - Informações faltantes` });
                 }
             }
             else {
-                reject({ type: "WARNING", payload: `<p>Comando: "${command.command}" já existe</p>` });
+                reject({ type: "WARNING", payload: `Comando: "${command.command}" já existe` });
             }
         } catch (error) {
             reject({ type: "ERRO", payload: error });

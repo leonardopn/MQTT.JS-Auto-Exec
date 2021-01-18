@@ -1,9 +1,39 @@
 import React, { useState } from "react";
-import Card from "../card/Card"
-
+import Card from "../card/Card";
+import axios from "axios";
+import { connect } from "react-redux";
+import { getCommands } from "../../store/actions/commandsAction"
 
 const Command = props => {
     let conteudoCommand = "";
+    const [inputValueName, setValueInputName] = useState(props.name);
+    const [inputValueCommand, setValueInputCommand] = useState(props.command);
+
+    function closeNewCommand() {
+        props.deleteNewCommand("");
+    }
+
+    function addCommand() {
+        const data = {
+            name: inputValueName,
+            command: inputValueCommand
+        };
+        axios.post("http://localhost:8888/addcommand", data).then(response => {
+            props.getCommands();
+            props.deleteNewCommand("");
+        }).catch(error => {
+            console.log(error.request.response);
+        })
+    }
+
+    function removeCommand() {
+        axios.delete("http://localhost:8888/deleteCommand/" + props.id).then(response => {
+            props.getCommands();
+            //props.deleteNewCommand("");
+        }).catch(error => {
+            console.log(error.request.response);
+        })
+    }
 
     if (!props.isNew) {
         const conteudo = (
@@ -12,6 +42,7 @@ const Command = props => {
                 <p>Título: {props.name}</p>
                 <p>Comando: {props.command}</p>
                 <p>Pasta: {props.folder}</p>
+                <button onClick={e => removeCommand()}>Excluir</button>
             </React.Fragment>
         )
         conteudoCommand = conteudo;
@@ -21,23 +52,17 @@ const Command = props => {
                 <table>
                     <tbody>
                         <tr>
-                            <td> <b><label htmlFor={"idComand" + props.id}>ID: </label></b></td>
-                            <td><input type="text" name={"idComand" + props.id} value={props.id} className="inputDefault" ></input></td>
-                        </tr>
-                        <tr>
                             <td><b><label htmlFor={"nameComand" + props.id}>Título: </label></b></td>
-                            <td> <input type="text" name={"nameComand" + props.id} value={props.name} className="inputDefault" ></input></td>
+                            <td> <input type="text" name={"nameComand" + props.id} defaultValue={inputValueName} className="inputDefault" onChange={e => setValueInputName(e.target.value)}></input></td>
                         </tr>
                         <tr>
                             <td><b><label htmlFor={"scriptComand" + props.id}>Comando: </label></b></td>
-                            <td>  <input type="text" name={"scriptComand" + props.id} value={props.command} className="inputDefault" ></input></td>
-                        </tr>
-                        <tr>
-                            <td><b><label htmlFor={"folderComand" + props.id}>Localização: </label></b></td>
-                            <td> <input type="text" name={"folderComand" + props.id} value={props.folder} className="inputDefault" ></input></td>
+                            <td>  <input type="text" name={"scriptComand" + props.id} defaultValue={inputValueCommand} className="inputDefault" onChange={e => setValueInputCommand(e.target.value)}></input></td>
                         </tr>
                     </tbody>
                 </table>
+                <button onClick={e => addCommand()}>Criar</button>
+                <button onClick={e => closeNewCommand()}>X</button>
             </React.Fragment>
         )
         conteudoCommand = conteudo;
@@ -50,4 +75,18 @@ const Command = props => {
     );
 }
 
-export default Command;
+const mapDispatchToProps = dispatch => {
+    return (
+        {
+            getCommands() {
+                const action = getCommands();
+                action.payload.then(value => {
+                    action.payload = value;
+                    dispatch(action);
+                });
+            }
+        }
+    )
+}
+
+export default connect(null, mapDispatchToProps)(Command);
