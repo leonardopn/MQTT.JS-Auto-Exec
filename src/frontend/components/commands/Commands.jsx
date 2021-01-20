@@ -15,7 +15,7 @@ const Commands = props => {
     }, [getCommands]);//Passar um array vazio, faz essa função executar somente na montagem e desmontagem
 
     function criarComando() {
-        setNewCommand(<Command isNew={true} deleteNewCommand={setNewCommand}></Command>);
+        setNewCommand(<Command type={"NEW"} deleteNewCommand={setNewCommand}></Command>);
     }
 
     return (
