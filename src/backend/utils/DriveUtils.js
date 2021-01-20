@@ -89,7 +89,7 @@ function createFileCommand(data) {
                     global.commands.set(id, command);
                     fs.writeFile(file, JSON.stringify(command), error => {
                         if (error) {
-                            reject({ type: "ERRO", payload: error })
+                            reject({ type: "ERRO", payload: error.message })
                         }
                         resolve({ type: "OK", payload: command });
                     })
@@ -165,7 +165,7 @@ function updateCommand(data) {
             }
         }
         else {
-            reject({ type: "WARNING", payload: `<p>WARNING - Informações faltantes</p>` });
+            reject({ type: "WARNING", payload: `WARNING - Informações faltantes` });
         }
     });
 }
@@ -182,10 +182,10 @@ function executeCommand(id) {
                 })
             }
             else {
-                reject({ type: "WARNING", payload: `<p>WARNING - Comando não encontrado</p>` })
+                reject({ type: "WARNING", payload: `WARNING - Comando não encontrado` })
             }
         } catch (error) {
-            reject({ type: "ERRO", payload: error })
+            reject({ type: "ERRO", payload: error.message })
         }
     })
 }

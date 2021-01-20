@@ -12,14 +12,14 @@ module.exports = class Command {
         return new Promise((resolve, reject) => {
             exec(this.command, (erro, saida, saidaErro) => {
                 if (erro) {
-                    reject({ type: "ERRO", payload: { message: erro.message + "\nSaída de erro da execução: " + saidaErro } })
+                    reject({ type: "ERRO", payload: erro.message + "\nSaída de erro da execução: " + saidaErro })
                     return;
                 }
                 if (saida) {
-                    resolve({ type: "OK", payload: { status: "OK", message: saida } });
+                    resolve({ type: "OK", payload: saida });
                     return
                 }
-                resolve({ type: "OK", payload: { status: "OK", message: `Sem saída` } });
+                resolve({ type: "OK", payload: `Sem saída` });
                 return
             });
         })

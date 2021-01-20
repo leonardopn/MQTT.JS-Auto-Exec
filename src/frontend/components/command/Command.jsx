@@ -58,18 +58,16 @@ const Command = props => {
         });
     }
 
+    function testCommand() {
+        axios.get("http://localhost:8888/execCommand/" + props.id).then(response => {
+            setLog(`Comando "${props.name}" executado! Saída: ${response.data}`);  
+        }).catch(error => {
+            console.log(error);
+            setLog(JSON.parse(error.request.response).payload);
+        });
+    }
+
     switch (type) {
-        case "CREATED":
-            return (
-                <Card class="intern">
-                    <p>Id: {props.id}</p>
-                    <p>Título: {props.name}</p>
-                    <p>Comando: {props.command}</p>
-                    <p>Pasta: {props.folder}</p>
-                    <button onClick={e => removeCommand()}>Excluir</button>
-                    <button onClick={e => setType("UPDATE")}>Atualizar</button>
-                </Card>
-            );
         case "NEW":
             return (
                 <Card class="intern">
@@ -85,8 +83,8 @@ const Command = props => {
                             </tr>
                         </tbody>
                     </table>
-                    <button onClick={e => addCommand()}>Criar</button>
-                    <button onClick={e => closeNewCommand()}>X</button>
+                    <button onClick={_ => addCommand()}>Criar</button>
+                    <button onClick={_ => closeNewCommand()}>X</button>
                 </Card>
             );
         case "UPDATE":
@@ -104,10 +102,22 @@ const Command = props => {
                             </tr>
                         </tbody>
                     </table>
-                    <button onClick={e => updateCommand()}>Atualizar</button>
-                    <button onClick={e => resetValuesUpdate()}>Cancelar</button>
+                    <button onClick={_ => updateCommand()}>Atualizar</button>
+                    <button onClick={_ => resetValuesUpdate()}>Cancelar</button>
                 </Card>
             )
+        default:
+            return (
+                <Card class="intern">
+                    <p>Id: {props.id}</p>
+                    <p>Título: {props.name}</p>
+                    <p>Comando: {props.command}</p>
+                    <p>Pasta: {props.folder}</p>
+                    <button onClick={_ => removeCommand()}>Excluir</button>
+                    <button onClick={_ => testCommand()}>Testar comando</button>
+                    <button onClick={_ => setType("UPDATE")}>Atualizar</button>
+                </Card>
+            );
     }
 }
 

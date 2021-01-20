@@ -40,10 +40,10 @@ router.delete('/deleteCommand/:id', function (req, res) {
         res.status(200).send(value.payload);
     }).catch(error => {
         if (error.type === "ERRO") {
-            res.status(404).send(error.payload.message);
+            res.status(404).send(error);
         }
         if (error.type === "WARNING") {
-            res.status(404).send(error.payload);
+            res.status(404).send(error);
         }
     })
 });
@@ -53,23 +53,23 @@ router.put('/updateCommand', function (req, res) {
         res.send(value.payload).status(200);
     }).catch(error => {
         if (error.type === "ERRO") {
-            res.status(404).send(error.payload.message);
+            res.status(404).send(error);
         }
         if (error.type === "WARNING") {
-            res.status(404).send(error.payload);
+            res.status(404).send(error);
         }
     });
 });
 
 router.get('/execCommand/:id', function (req, res) {
     executeCommand(req.params.id).then(value => {
-        res.send(value.payload).status(200);
+        res.status(200).send(value.payload);
     }).catch(error => {
         if (error.type === "ERRO") {
-            res.status(404).send(error.payload.message);
+            res.status(404).send(error);
         }
         if (error.type === "WARNING") {
-            res.status(404).send(error.payload);
+            res.status(404).send(error);
         }
     });
 });
