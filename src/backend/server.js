@@ -1,3 +1,4 @@
+const {getMQTTConnection} = require("./config/mqttClient")
 const bodyParser = require('body-parser');
 const express = require('express');
 const cors = require('cors');
@@ -41,6 +42,7 @@ function startServer() {
             console.log(`Backend escutando na porta ${porta}!`);
             console.log("Carregando comandos ...");
             loadDb().then(value => {
+                getMQTTConnection({host: "tcp:10.0.10.100:1883", user: "rasp_mqtt", pass:"rKjan$3vto$F"});
                 resolve(value);
             }).catch(error => {
                 reject(error)
