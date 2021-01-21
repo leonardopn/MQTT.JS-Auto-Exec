@@ -1,11 +1,9 @@
 const mqtt = require('async-mqtt');
-const {setLog} = require('../utils/LogUtils')
 
 function getMQTTConnection(params) {
     const client = mqtt.connect(params.host, { username: params.user, password: params.pass, keepalive: 10, reconnectPeriod: 5000 });
 
     async function subscribeTopic() {
-        setLog("Conexão feita com sucesso!");
         try {
             client.subscribe("/devices/pc_gamer");
         } catch (e) {
