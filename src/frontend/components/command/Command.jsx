@@ -62,7 +62,6 @@ const Command = props => {
         axios.get("http://localhost:8888/execCommand/" + props.id).then(response => {
             setLog(`Comando "${props.name}" executado! Saída: ${response.data}`);  
         }).catch(error => {
-            console.log(error);
             setLog(JSON.parse(error.request.response).payload);
         });
     }
