@@ -7,7 +7,10 @@ const StatusMqtt = props => {
     }
 
     return (
-        <p>Server MQTT: {trataStatus(props.status)}</p>
+        <div>
+            <button>Testar</button>
+            <p>Server MQTT: {trataStatus(props.status)}</p>
+        </div>
     );
 }
 
