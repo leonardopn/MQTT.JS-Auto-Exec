@@ -1,4 +1,5 @@
 .navbar {
+    display         : flex;
     background-color  : #4E4E4E;
     -webkit-box-shadow: 0px 0px 5px 1px rgba(50, 50, 50, 1);
     -moz-box-shadow   : 0px 0px 5px 1px rgba(50, 50, 50, 1);
@@ -35,4 +36,13 @@
 
 .tableNavbar #buttonActive {
     background-color: rgb(0, 140, 255);
+}
+
+#statusMQTT {
+    flex:1;
+    float: right
+}
+
+#statusMQTT p{
+    float: right
 }

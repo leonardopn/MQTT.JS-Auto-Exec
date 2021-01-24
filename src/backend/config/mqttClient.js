@@ -23,6 +23,7 @@ function getMQTTConnection(params) {
     const client = mqtt.connect(params.host, { username: params.user, password: params.pass, keepalive: 5, reconnectPeriod: 1000, connectTimeout: 5000 });
     async function subscribeTopic() {
         io.sockets.emit("LOG_TERMINAL", `Conexão ao servidor: ${params.host} feita com sucesso!`);
+        io.sockets.emit("STATUS_MQTT", true);
         try {
             client.subscribe("/devices/pc_gamer");
         } catch (e) {
@@ -31,6 +32,7 @@ function getMQTTConnection(params) {
     }
 
     async function errorConnect(error) {
+        io.sockets.emit("STATUS_MQTT", false);
         io.sockets.emit("LOG_TERMINAL", "ERRO - " + error.message);
     }
 
@@ -39,6 +41,7 @@ function getMQTTConnection(params) {
     }
 
     async function offLine() {
+        io.sockets.emit("STATUS_MQTT", false);
         io.sockets.emit("LOG_TERMINAL", `Conexão com o servidor MQTT foi perdida.`);
     }
 
