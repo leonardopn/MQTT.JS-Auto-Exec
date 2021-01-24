@@ -1,4 +1,13 @@
-const mqtt = require('async-mqtt');
+import mqtt from 'async-mqtt';
+import { io } from "../config/socketServer";
+
+function achaComandoEExecuta(comando) {
+    global.commands.forEach(command => {
+        if ((command.name === comando || command.command === comando)) {
+            command.execCommand();
+        }
+    })
+}
 
 function getMQTTConnection(params) {
     const client = mqtt.connect(params.host, { username: params.user, password: params.pass, keepalive: 5, reconnectPeriod: 1000, connectTimeout: 5000 });
@@ -34,7 +43,8 @@ function getMQTTConnection(params) {
     client.on("offline", offLine);
     client.on("reconnect", reconnect);
     client.on('message', function (topic, message) {
-        console.log(message.toString())
+        console.log(message.toString());
+        achaComandoEExecuta(message.toString());
     });
 
     return client;

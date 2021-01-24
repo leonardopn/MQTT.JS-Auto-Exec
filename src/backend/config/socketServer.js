@@ -11,14 +11,10 @@ function startServerSocket() {
     return new Promise((resolve, reject) => {
         try {
             io.on("connection", (socket) => {
-                console.log("New client connected");
-
-                socket.on("hello", (arg) => {
-                    console.log(arg); 
-                });
+                socket.emit("LOG_TERMINAL", "Cliente conectado ao socket!");
 
                 socket.on("disconnect", () => {
-                    console.log("Client disconnected");
+                    socket.emit("LOG_TERMINAL", "Cliente desconectado do socket!");
                 });
             });
 
@@ -32,4 +28,5 @@ function startServerSocket() {
         }
     })
 }
-export default startServerSocket;
+
+export { startServerSocket, io };

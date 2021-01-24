@@ -3,7 +3,7 @@ import React from "react";
 import NavBar from "./components/navBar/NavBar"
 import { connect } from "react-redux";
 import MainContent from "./components/mainContent/MainContent"
-import socket from "./scripts/socketClient"
+import "./scripts/socketClient"
 
 const App = props => {
 	return (
