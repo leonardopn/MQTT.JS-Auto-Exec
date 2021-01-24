@@ -223,4 +223,4 @@ function updateConfig(data) {
     });
 }
 
-module.exports = { updateConfig, createFoldersApp, loadCommands, createFileCommand, getCommands, deleteCommand, updateCommand, executeCommand, getConfig };
+export { updateConfig, createFoldersApp, loadCommands, createFileCommand, getCommands, deleteCommand, updateCommand, executeCommand, getConfig };

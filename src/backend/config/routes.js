@@ -101,4 +101,4 @@ router.put('/updateConfig', function (req, res) {
     }
 });
 
-module.exports = router;
+export default router;

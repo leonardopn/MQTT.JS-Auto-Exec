@@ -16,4 +16,4 @@ function verificaObjetoDefault(data, objComparativo) {
     return _.isEqual(propsData, propsOnjComparativo);
 }
 
-module.exports = { configDefault, verificaObjetoDefault }
+export { configDefault, verificaObjetoDefault }

@@ -1,9 +1,9 @@
-const {getMQTTConnection} = require("./config/mqttClient")
-const bodyParser = require('body-parser');
-const express = require('express');
-const cors = require('cors');
-const router = require('./config/routes');
-const { loadCommands, createFoldersApp } = require('./utils/DriveUtils')
+import express from "express"
+import { getMQTTConnection } from "./config/mqttClient"
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import router from './config/routes';
+import { loadCommands, createFoldersApp } from './utils/DriveUtils'
 
 const server = express();
 
@@ -42,7 +42,7 @@ function startServer() {
             console.log(`Backend escutando na porta ${porta}!`);
             console.log("Carregando comandos ...");
             loadDb().then(value => {
-                getMQTTConnection({host: "tcp:10.0.10.100:1883", user: "rasp_mqtt", pass:"rKjan$3vto$F"});
+                getMQTTConnection({ host: "tcp:10.0.10.100:1883", user: "rasp_mqtt", pass: "rKjan$3vto$F" });
                 resolve(value);
             }).catch(error => {
                 reject(error)
@@ -51,4 +51,4 @@ function startServer() {
     })
 }
 
-module.exports = startServer;
+export default startServer;

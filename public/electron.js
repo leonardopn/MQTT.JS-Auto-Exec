@@ -1,16 +1,24 @@
+export {}
+
+import startServer from "../src/backend/server"
+
 require('v8-compile-cache');
 
 const electron = require('electron');
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
-const startServer = require('../src/backend/server.js')
 
 let mainWindow;
 
 function createWindow() {
     startServer().then(value => {
         console.log("Comandos carregados: " + value.payload.size + "\n");
-        mainWindow = new BrowserWindow({ width: 800, height: 600 });
+
+        mainWindow = new BrowserWindow({
+            width: 800, height: 600, webPreferences: {
+                nodeIntegration: true,
+            },
+        });
         mainWindow.setMaximumSize(800, 600)
         mainWindow.setMinimumSize(800, 600)
 

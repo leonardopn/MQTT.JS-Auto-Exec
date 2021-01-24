@@ -2,7 +2,7 @@
   "name": "mqtt-automation-js",
   "version": "0.1.0",
   "private": true,
-  "main": "./public/electron.js",
+  "main": "./public/esm.js",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -11,6 +11,7 @@
     "axios": "^0.21.1",
     "body-parse": "^0.1.0",
     "cors": "^2.8.5",
+    "esm": "^3.2.25",
     "express": "^4.17.1",
     "lodash": "^4.17.20",
     "random-id": "^1.0.4",

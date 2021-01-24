@@ -40,4 +40,4 @@ function getMQTTConnection(params) {
     return client;
 }
 
-module.exports = { getMQTTConnection };
+export { getMQTTConnection };
