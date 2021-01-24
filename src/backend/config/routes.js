@@ -9,6 +9,10 @@ const { deleteCommand,
     getConfig,
     updateConfig } = require("../utils/DriveUtils")
 
+router.get("/", (req, res) => {
+    res.status(200).send({ response: "I am alive" });
+});
+
 router.get('/getCommands', function (_, res) {
     getCommands().then(value => {
         res.status(200).send(value.payload);

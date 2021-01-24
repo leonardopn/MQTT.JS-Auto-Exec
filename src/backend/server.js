@@ -3,9 +3,10 @@ import { getMQTTConnection } from "./config/mqttClient"
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import router from './config/routes';
-import { loadCommands, createFoldersApp } from './utils/DriveUtils'
+import { loadCommands, createFoldersApp } from './utils/DriveUtils';
+import startServerSocket from "./config/socketServer"
 
-const server = express();
+const serverExpress = express();
 
 var corsOptions = {
     credentials: true,
@@ -13,10 +14,10 @@ var corsOptions = {
     optionsSuccessStatus: 200
 }
 
-server.use(bodyParser.urlencoded({ extended: true }));
-server.use(bodyParser.json());
-server.use(cors(corsOptions));
-server.use(router);
+serverExpress.use(bodyParser.urlencoded({ extended: true }));
+serverExpress.use(bodyParser.json());
+serverExpress.use(cors(corsOptions));
+serverExpress.use(router);
 
 const porta = 8888;
 
@@ -38,16 +39,24 @@ function loadDb() {
 
 function startServer() {
     return new Promise((resolve, reject) => {
-        server.listen(porta, async _ => {
-            console.log(`Backend escutando na porta ${porta}!`);
-            console.log("Carregando comandos ...");
-            loadDb().then(value => {
-                getMQTTConnection({ host: "tcp:10.0.10.100:1883", user: "rasp_mqtt", pass: "rKjan$3vto$F" });
-                resolve(value);
+        try {
+            startServerSocket().then(value => {
+                serverExpress.listen(porta, async _ => {
+                    console.log(`Backend escutando na porta ${porta}!`);
+                    console.log("Carregando comandos ...");
+                    loadDb().then(value => {
+                        //getMQTTConnection({ host: "tcp:10.0.10.100:1883", user: "rasp_mqtt", pass: "rKjan$3vto$F" });
+                        resolve(value);
+                    }).catch(error => {
+                        reject(error)
+                    });
+                });
             }).catch(error => {
                 reject(error)
-            });
-        });
+            })
+        } catch (error) {
+            reject({ type: "ERRO", payload: error })
+        }
     })
 }
 
