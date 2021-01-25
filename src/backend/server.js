@@ -4,7 +4,8 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import router from './config/routes';
 import { loadCommands, createFoldersApp } from './utils/DriveUtils';
-import { startServerSocket } from "./config/socketServer"
+import { startServerSocket } from "./config/socketServer";
+import axios from "axios";
 
 const serverExpress = express();
 
@@ -45,7 +46,9 @@ function startServer() {
                     console.log(`Backend escutando na porta ${porta}!`);
                     console.log("Carregando comandos ...");
                     loadDb().then(value => {
-                        getMQTTConnection({ host: "tcp:10.0.10.100:1883", user: "rasp_mqtt", pass: "rKjan$3vto$F" });
+                        axios.get('http://localhost:8888/getConfig').then(value => {
+                            getMQTTConnection(value.data/*{ host: "tcp:10.0.10.100:1883", user: "rasp_mqtt", pass: "rKjan$3vto$F" }*/);
+                        })
                         resolve(value);
                     }).catch(error => {
                         reject(error)

@@ -1,6 +1,8 @@
 import mqtt from 'async-mqtt';
 import { io } from "../config/socketServer";
 
+let contadorReconnect = 0;
+
 function achaComandoEExecuta(comando) {
     io.sockets.emit("LOG_TERMINAL", `Procurando o comando: "${comando}"`);
     let commandExists = false;
@@ -19,53 +21,60 @@ function achaComandoEExecuta(comando) {
     }
 }
 
+async function subscribeTopic(params) {
+    contadorReconnect = 0;
+    io.sockets.emit("LOG_TERMINAL", `Conexão ao servidor: ${params.serverIp} feita com sucesso!`);
+    io.sockets.emit("STATUS_MQTT", true);
+    try {
+        params.client.subscribe(params.topic);
+    } catch (e) {
+        console.log(e.stack);
+    }
+}
+
+async function errorConnect(error) {
+    io.sockets.emit("LOG_TERMINAL", "ERRO - " + error.message);
+}
+
+async function reconnect(params) {
+    io.sockets.emit("STATUS_MQTT", false);
+    if (contadorReconnect <= 3) {
+        io.sockets.emit("LOG_TERMINAL", `Tentando se re-conectar ao servidor MQTT no endereço: ${params.serverIp}`);
+        contadorReconnect++;
+    }
+    else {
+        io.sockets.emit("LOG_TERMINAL", `Número máximo de tentativas de re-conexão foram feitas, tente novamente mais tarde.`);
+        params.client.end();
+        contadorReconnect = 0;
+    }
+}
+
+async function offLine() {
+    io.sockets.emit("LOG_TERMINAL", `Conexão com o servidor MQTT foi perdida.`);
+}
+
 async function getMQTTConnection(params) {
-
-    let contador = 0;
-
-    const client = mqtt.connect(params.host, { username: params.user, password: params.pass, keepalive: 5, reconnectPeriod: 1000, connectTimeout: 5000 });
-    async function subscribeTopic() {
-        io.sockets.emit("LOG_TERMINAL", `Conexão ao servidor: ${params.host} feita com sucesso!`);
-        io.sockets.emit("STATUS_MQTT", true);
-        try {
-            client.subscribe("/devices/pc_gamer");
-        } catch (e) {
-            console.log(e.stack);
-        }
+    if (global.clientMQTT) {
+        global.clientMQTT.connected
+        global.clientMQTT.end();
     }
-
-    async function errorConnect(error) {
-        io.sockets.emit("LOG_TERMINAL", "ERRO - " + error.message);
-    }
-
-    async function reconnect() {
-        io.sockets.emit("STATUS_MQTT", false);
-        if (contador <= 3) {
-            io.sockets.emit("LOG_TERMINAL", `Tentando se re-conectar ao servidor MQTT no endereço: ${params.host}`);
-            contador++;
-        }
-        else {
-            io.sockets.emit("LOG_TERMINAL", `Número máximo de tentativas de re-conexão foram feitas, tente novamente mais tarde.`);
-            client.end();
-            contador = 0;
-        }
-    }
-
-    async function offLine() {
-        io.sockets.emit("LOG_TERMINAL", `Conexão com o servidor MQTT foi perdida.`);
-    }
-
-    client.on("connect", subscribeTopic);
-    client.on("error", errorConnect);
+    const client = mqtt.connect(params.serverIp, { username: params.user, password: params.pass, keepalive: 5, reconnectPeriod: 1000, connectTimeout: 5000 });
+    client.on("connect", () => {
+        subscribeTopic({ client, ...params })
+    });
+    client.on("error", error => {
+        errorConnect(error)
+    });
     client.on("offline", offLine);
-    client.on("reconnect", reconnect);
-    client.on('message', function (_, message) {
+    client.on("reconnect", () => {
+        reconnect({ client, ...params })
+    });
+    client.on('message', (_, message) => {
         io.sockets.emit("LOG_TERMINAL", `A mensagem: "${message.toString()}" foi recebida do servidor MQTT.`);
         achaComandoEExecuta(message.toString());
     });
 
-    return client
-
+    global.clientMQTT = client;
 }
 
 
