@@ -46,9 +46,6 @@ function startServer() {
                     console.log(`Backend escutando na porta ${porta}!`);
                     console.log("Carregando comandos ...");
                     loadDb().then(value => {
-                        axios.get('http://localhost:8888/getConfig').then(value => {
-                            getMQTTConnection(value.data/*{ host: "tcp:10.0.10.100:1883", user: "rasp_mqtt", pass: "rKjan$3vto$F" }*/);
-                        })
                         resolve(value);
                     }).catch(error => {
                         reject(error)

@@ -6,23 +6,38 @@ import DivFlex from "../divFlex/DivFlex"
 import iconConfigDark from "../../img/config_dark_100.png"
 import axios from "axios";
 import { connect } from "react-redux";
-import { getConfig, updateIpConfig, updatePass, updateStartUp, updateUser, resetConfig, updateTopic, problemGetConfig } from "../../store/actions/configs"
+import { updateConfig, resetConfig, } from "../../store/actions/configs"
 
 const { setLog } = require("../../../backend/utils/LogUtils")
 
 const Config = props => {
+    const [valueIP, setValueIP] = React.useState("");
+    const [valueUser, setValueUser] = React.useState("");
+    const [valuePass, setValuePass] = React.useState("");
+    const [valueTopic, setValueTopic] = React.useState("");
+    const [valueStartUp, setValueStartUp] = React.useState(false);
+    const [valueProblem, setValueProblem] = React.useState("");
 
-    const { getConfig } = props;
-
-    React.useEffect(() => {
-        getConfig();
-    }, [getConfig]);
+    React.useState(() => {
+        setValueIP(props.configs.serverIp);
+        setValueProblem(props.configs.problem.message);
+        setValueUser(props.configs.user);
+        setValuePass(props.configs.pass);
+        setValueTopic(props.configs.topic);
+        setValueStartUp(props.configs.startup);
+    }, [props.configs]);
 
     function setConfig() {
-        let data = { ...props.configs };
-        delete data.problem;//Dando problema
+        let data = {
+            serverIp: valueIP,
+            user: valueUser,
+            pass: valuePass,
+            topic: valueTopic,
+            startup: valueStartUp
+        };
         axios.put("http://localhost:8888/updateConfig", data).then(_ => {
             setLog("Configurações salvas!");
+            props.updateConfig(data);
         }).catch(error => {
             setLog(error.response.data.type + " - " + error.response.data.payload);
         })
@@ -30,7 +45,7 @@ const Config = props => {
 
     return (
         <Card class="main" id="divConfig">
-            <b>{props.problem.message}</b>
+            <b>{valueProblem}</b>
             <DivFlex>
                 <img src={iconConfigDark} className="iconM" alt="config_icon"></img>
                 <h2>Configurações</h2>
@@ -42,19 +57,19 @@ const Config = props => {
                     <tbody>
                         <tr>
                             <td><b><label htmlFor="ipServerMQTT">IP servidor: </label></b></td>
-                            <td><input type="text" name="ipServerMQTT" value={props.ip} className="inputDefault" onChange={e => props.updateIp(e.target.value)}></input></td>
+                            <td><input type="text" name="ipServerMQTT" value={valueIP} className="inputDefault" onChange={e => setValueIP(e.target.value)}></input></td>
                         </tr>
                         <tr>
                             <td> <b><label htmlFor="userServerMQTT">Usuário: </label></b></td>
-                            <td><input type="text" name="userServerMQTT" value={props.user} className="inputDefault" onChange={e => props.updateUser(e.target.value)}></input></td>
+                            <td><input type="text" name="userServerMQTT" value={valueUser} className="inputDefault" onChange={e => setValueUser(e.target.value)}></input></td>
                         </tr>
                         <tr>
                             <td><b><label htmlFor="passServerMQTT">Senha: </label></b></td>
-                            <td><input type="password" name="passServerMQTT" value={props.pass} className="inputDefault" onChange={e => props.updatePass(e.target.value)}></input></td>
+                            <td><input type="password" name="passServerMQTT" value={valuePass} className="inputDefault" onChange={e => setValuePass(e.target.value)}></input></td>
                         </tr>
                         <tr>
                             <td><b><label htmlFor="topicServerMQTT">Tópico: </label></b></td>
-                            <td><input type="text" name="topicServerMQTT" value={props.topic} className="inputDefault" onChange={e => props.updateTopic(e.target.value)}></input></td>
+                            <td><input type="text" name="topicServerMQTT" value={valueTopic} className="inputDefault" onChange={e => setValueTopic(e.target.value)}></input></td>
                         </tr>
                     </tbody>
                 </table>
@@ -63,7 +78,7 @@ const Config = props => {
             <Card class={"intern"}>
                 <h3>Cliente</h3>
                 <label htmlFor="checkBoxOpenStartupSystem">Abrir com o sistema: </label>
-                <input type="checkbox" name="checkBoxOpenStartupSystem" onChange={e => props.updateStartUp(e.target.checked)} checked={props.startup}></input>
+                <input type="checkbox" name="checkBoxOpenStartupSystem" onChange={e => setValueStartUp(e.target.checked)} checked={valueStartUp}></input>
             </Card>
             <button onClick={_ => setConfig()}>Salvar</button>
             <button onClick={_ => props.resetConfig()}>Configurações Padrão</button>
@@ -74,50 +89,18 @@ const Config = props => {
 const mapStateToProps = state => {
     return {
         configs: state.configs,
-        problem: state.configs.problem,
-        ip: state.configs.serverIp,
-        user: state.configs.user,
-        pass: state.configs.pass,
-        topic: state.configs.topic,
-        startup: state.configs.startup,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return (
         {
-            getConfig() {
-                const action = getConfig();
-                action.payload.then(value => {
-                    action.payload = value;
-                    dispatch(action);
-                }).catch(error => {
-                    const actionProblem = problemGetConfig(<p className="problem">{"ERRO - " + error.payload}<br></br><br></br>{"Dados padrões serão carregados!"}</p>);
-                    dispatch(actionProblem);
-                })
-            },
-            updateIp(value) {
-                const action = updateIpConfig(value);
-                dispatch(action);
-            },
-            updateUser(value) {
-                const action = updateUser(value);
-                dispatch(action);
-            },
-            updatePass(value) {
-                const action = updatePass(value);
-                dispatch(action);
-            },
-            updateTopic(value) {
-                const action = updateTopic(value);
-                dispatch(action);
-            },
-            updateStartUp(value) {
-                const action = updateStartUp(value);
-                dispatch(action);
-            },
             resetConfig() {
                 const action = resetConfig();
+                dispatch(action);
+            },
+            updateConfig(data) {
+                const action = updateConfig(data);
                 dispatch(action);
             }
         }

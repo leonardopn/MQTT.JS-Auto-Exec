@@ -53,28 +53,34 @@ async function offLine() {
     io.sockets.emit("LOG_TERMINAL", `Conexão com o servidor MQTT foi perdida.`);
 }
 
-async function getMQTTConnection(params) {
-    if (global.clientMQTT) {
-        global.clientMQTT.connected
-        global.clientMQTT.end();
-    }
-    const client = mqtt.connect(params.serverIp, { username: params.user, password: params.pass, keepalive: 5, reconnectPeriod: 1000, connectTimeout: 5000 });
-    client.on("connect", () => {
-        subscribeTopic({ client, ...params })
-    });
-    client.on("error", error => {
-        errorConnect(error)
-    });
-    client.on("offline", offLine);
-    client.on("reconnect", () => {
-        reconnect({ client, ...params })
-    });
-    client.on('message', (_, message) => {
-        io.sockets.emit("LOG_TERMINAL", `A mensagem: "${message.toString()}" foi recebida do servidor MQTT.`);
-        achaComandoEExecuta(message.toString());
-    });
+function getMQTTConnection(params) {
+    return new Promise((resolve, reject) => {
+        try {
+            if (global.clientMQTT) {
+                global.clientMQTT.end();
+            }
+            const client = mqtt.connect(params.serverIp, { username: params.user, password: params.pass, keepalive: 5, reconnectPeriod: 1000, connectTimeout: 5000 });
+            client.on("connect", () => {
+                subscribeTopic({ client, ...params })
+            });
+            client.on("error", error => {
+                errorConnect(error)
+            });
+            client.on("offline", offLine);
+            client.on("reconnect", () => {
+                reconnect({ client, ...params })
+            });
+            client.on('message', (_, message) => {
+                io.sockets.emit("LOG_TERMINAL", `A mensagem: "${message.toString()}" foi recebida do servidor MQTT.`);
+                achaComandoEExecuta(message.toString());
+            });
 
-    global.clientMQTT = client;
+            global.clientMQTT = client;
+            resolve({ status: "OK", payload: "OK" });
+        } catch (error) {
+            reject({ status: "ERRO", payload: error });
+        }
+    })
 }
 
 

@@ -1,3 +1,4 @@
+import { getMQTTConnection } from "./mqttClient";
 const express = require('express')
 const { configDefault, verificaObjetoDefault } = require("../config/defaultConfigs")
 const router = express.Router();
@@ -7,7 +8,7 @@ const { deleteCommand,
     createFileCommand,
     executeCommand,
     getConfig,
-    updateConfig } = require("../utils/DriveUtils")
+    updateConfig } = require("../utils/DriveUtils");
 
 router.get("/", (req, res) => {
     res.status(200).send({ response: "I am alive" });
@@ -103,6 +104,14 @@ router.put('/updateConfig', function (req, res) {
     } else {
         res.status(404).send({ type: "WARNING", payload: "Requisição com body vazio" });
     }
+});
+
+router.post('/startServerMQTT', function (req, res) {
+    getMQTTConnection(req.body).then(value =>{
+        res.status(200).send(value);
+    }).catch(error => {
+        res.status(404).send({ type: "ERRO", payload: error });
+    });
 });
 
 export default router;

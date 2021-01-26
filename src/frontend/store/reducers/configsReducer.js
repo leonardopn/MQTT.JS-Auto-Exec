@@ -2,7 +2,7 @@ import types from "../actions/types"
 
 const initialState = {
     problem: {
-        message: "", status: false
+        message: "", status: true,
     },
     serverIp: "",
     user: "",
@@ -22,10 +22,19 @@ export default function configsReducer(state = initialState, action) {
                 startup: action.payload.startup,
                 problem: { message: "", status: false },
             };
+        case types.UPDATE_CONFIG:
+            return {
+                serverIp: action.payload.serverIp,
+                user: action.payload.user,
+                pass: action.payload.pass,
+                topic: action.payload.topic,
+                startup: action.payload.startup,
+                problem: { message: "", status: false },
+            };
         case types.PROBLEM_GET_CONFIG:
             return {
                 ...state,
-                problem: { message: action.payload, status: false },
+                problem: { message: action.payload, status: true },
             };
         case types.UPDATE_IP_CONFIG:
             return {
