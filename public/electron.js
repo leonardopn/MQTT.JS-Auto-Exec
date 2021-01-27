@@ -1,5 +1,5 @@
-export {}
-
+export { }
+import installExtension, { REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
 import startServer from "../src/backend/server"
 
 require('v8-compile-cache');
@@ -7,11 +7,23 @@ require('v8-compile-cache');
 const electron = require('electron');
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
+const isDev = require('electron-is-dev');
 
 let mainWindow;
 
+function startExtensionsDev(extensions) {
+    extensions.forEach(extension => {
+        installExtension(extension)
+            .then((name) => console.log(`Added Extension:  ${name}`))
+            .catch((err) => console.log('An error occurred: ', err));
+    })
+
+}
+
 function createWindow() {
     startServer().then(value => {
+        (isDev) && startExtensionsDev([REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS]);
+
         console.log("Comandos carregados: " + value.payload.size + "\n");
 
         mainWindow = new BrowserWindow({
