@@ -1,3 +1,5 @@
+import { configDefault } from "../config/defaultConfigs";
+
 const fs = require("fs");
 const home = require('os').homedir();
 const Command = require("../model/entities/Command")
@@ -192,23 +194,36 @@ function executeCommand(id) {
 
 function getConfig() {
     return new Promise((resolve, reject) => {
-        fs.readFile(folderApp + "config.json", (error, data) => {
-            try {
-                if (error) {
-                    reject({ type: "ERRO", payload: error.message })
-                }
+        if (fs.existsSync(folderApp + "config.json")) {
+            fs.readFile(folderApp + "config.json", (error, data) => {
+                try {
+                    if (error) {
+                        reject({ type: "ERRO", payload: error.message })
+                    }
 
-                let json = JSON.parse(data);
-                if (json.topic && json.serverIp && json.user && json.pass && json.startup ? true : true) {
-                    resolve({ type: "OK", payload: json })
+                    let json = JSON.parse(data);
+                    if (json.topic && json.serverIp && json.user && json.pass && json.startup ? true : true) {
+                        resolve({ type: "OK", payload: json })
+                    }
+                    else {
+                        reject({ type: "WARNING", payload: `WARNING - Informações faltantes` });
+                    }
+                } catch (e) {
+                    reject({ type: "ERRO", payload: e.message })
                 }
-                else {
-                    reject({ type: "WARNING", payload: `WARNING - Informações faltantes` });
-                }
-            } catch (e) {
-                reject({ type: "ERRO", payload: e.message })
-            }
-        });
+            });
+        }
+        else {
+            updateConfig(configDefault).then(value => {
+                getConfig().then(value => {
+                    resolve(value);
+                }).catch(err => {
+                    reject(err);
+                });
+            }).catch(error => {
+                reject({ type: "ERRO", payload: error.message })
+            })
+        }
     })
 }
 

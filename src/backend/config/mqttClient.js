@@ -39,7 +39,6 @@ async function errorConnect(error) {
 }
 
 async function reconnect(params) {
-    io.sockets.emit("STATUS_MQTT", false);
     if (contadorReconnect <= 3) {
         io.sockets.emit("LOG_TERMINAL", `Tentativa ${contadorReconnect} de reconexão ao servidor MQTT no endereço: ${params.serverIp}`);
         contadorReconnect++;
@@ -54,6 +53,7 @@ async function reconnect(params) {
 
 async function offLine() {
     io.sockets.emit("LOG_TERMINAL", `Servidor MQTT offline.`);
+    io.sockets.emit("STATUS_MQTT", false);
 }
 
 function getMQTTConnection(params) {

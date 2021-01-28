@@ -1,7 +1,7 @@
 import types from "../actions/types"
 
 const initialState = {
-    status: true,
+    status: false,
     timer: false
 }
 

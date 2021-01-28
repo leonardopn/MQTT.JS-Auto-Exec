@@ -9,7 +9,9 @@ const StatusMqtt = props => {
     const [intervalTimer, setIntervalTimer] = React.useState("");
 
     React.useEffect(() => {
-        restartClientMQTT();
+        if(props.configs.serverIp){
+            restartClientMQTT();
+        }
         // eslint-disable-next-line
     }, [props.configs]);
 

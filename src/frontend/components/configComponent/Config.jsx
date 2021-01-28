@@ -18,7 +18,7 @@ const Config = props => {
     const [valueStartUp, setValueStartUp] = React.useState(false);
     const [valueProblem, setValueProblem] = React.useState("");
 
-    React.useState(() => {
+    React.useEffect(() => {
         setValueIP(props.configs.serverIp);
         setValueProblem(props.configs.problem.message);
         setValueUser(props.configs.user);
