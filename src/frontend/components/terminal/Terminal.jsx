@@ -9,7 +9,7 @@ const Terminal = props => {
             textarea.scrollTop = textarea.scrollHeight;
         }
         autoScroll();
-    }, []);
+    }, [props.textTextArea]);
 
 
     return (
