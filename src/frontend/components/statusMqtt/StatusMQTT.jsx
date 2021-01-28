@@ -3,13 +3,17 @@ import { connect } from "react-redux";
 import axios from "axios";
 import { updateStatusMQTT, updateTimerMQTT } from "../../store/actions/mqtt.action";
 import { setLog } from "../../../backend/utils/LogUtils";
+import DivFlex from "../divFlex/DivFlex";
+import ReactLoading from 'react-loading';
+import "./statusMQTT.css"
 
 const StatusMqtt = props => {
     const [timer, setTimer] = React.useState(30);
     const [intervalTimer, setIntervalTimer] = React.useState("");
+    const [loading, setLoading] = React.useState("");
 
     React.useEffect(() => {
-        if(props.configs.serverIp){
+        if (props.configs.serverIp) {
             restartClientMQTT();
         }
         // eslint-disable-next-line
@@ -23,10 +27,12 @@ const StatusMqtt = props => {
     }, [props.statusTimer]);
 
     function restartClientMQTT() {
+        setLoading(<ReactLoading type={"spin"} color={"#4E4E4E"} height={20} width={20} />)
         resetTimer();
         const data = { ...props.configs };
         if (!data.problem.status) {
             axios.post("http://localhost:8888/startServerMQTT", data).then(_ => {
+                setLoading("");
             }).catch(error => {
                 props.updateStatusMQTT(false);
                 setLog(error.response.data.type + " - " + JSON.stringify(error.response.data.payload));
@@ -60,14 +66,19 @@ const StatusMqtt = props => {
     }
 
     function trataStatus(status) {
-        return status ? "Conectado" : "Desconectado";
+        return status ? "Green" : "Red";
     }
 
     return (
-        <div>
-            <button onClick={_ => restartClientMQTT()}>Testar</button>
-            <p>Server MQTT: {trataStatus(props.mqttStatus)}</p>
-            <p>Timer {timer}</p>
+        <div id="statusMQTTFlex">
+            <DivFlex>
+                <button onClick={_ => restartClientMQTT()}>
+                    {loading}
+                </button>
+            </DivFlex>
+            <DivFlex id={`divFlexStatusMQTT${trataStatus(props.mqttStatus)}`}>
+                <div id="divStatusMQTT">MQTT</div>
+            </DivFlex>
         </div>
     );
 }

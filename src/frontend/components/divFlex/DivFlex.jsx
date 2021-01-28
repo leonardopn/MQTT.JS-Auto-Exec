@@ -3,7 +3,7 @@ import "./divFlex.css"
 
 const DivFlex = props => {
     return (
-        <div className="divFlex">
+        <div className="divFlex" id={props.id}>
             {props.children}
         </div>
     )
