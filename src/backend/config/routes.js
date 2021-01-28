@@ -1,4 +1,4 @@
-import { getMQTTConnection } from "./mqttClient";
+import { getMQTTConnection, testConnection } from "./mqttClient";
 const express = require('express')
 const { configDefault, verificaObjetoDefault } = require("../config/defaultConfigs")
 const router = express.Router();
@@ -107,7 +107,15 @@ router.put('/updateConfig', function (req, res) {
 });
 
 router.post('/startServerMQTT', function (req, res) {
-    getMQTTConnection(req.body).then(value =>{
+    getMQTTConnection(req.body).then(value => {
+        res.status(200).send(value);
+    }).catch(error => {
+        res.status(404).send(error);
+    });
+});
+
+router.post('/testServerMQTT', function (req, res) {
+    testConnection(req.body).then(value => {
         res.status(200).send(value);
     }).catch(error => {
         res.status(404).send(error);

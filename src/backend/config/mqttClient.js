@@ -89,5 +89,39 @@ function getMQTTConnection(params) {
     })
 }
 
+function testConnection(params) {
+    return new Promise((resolve, reject) => {
+        try {
+            const client = mqtt.connect(params.serverIp, { username: params.user, password: params.pass, connectTimeout: 10000});
+            client.on("connect", () => {
+                resolve({ status: "OK", payload: "OK" });
+                client.end();
+            });
 
-export { getMQTTConnection };
+            client.on("error", error => {
+                reject({ status: "ERRO", payload: error.message });
+                client.end();
+            });
+
+            client.on("offline", () => {
+                reject({ status: "WARNING", payload: "OFFLINE" });
+                client.end();
+            });
+
+            client.on("disconnect", () => {
+                reject({ status: "WARNING", payload: "OFFLINE" });
+                client.end();
+            });
+
+            client.on("reconnect", () => {
+                reject({ status: "WARNING", payload: "OFFLINE" });
+                client.end();
+            });
+        } catch (error) {
+            reject({ status: "ERRO", payload: error.message });
+        }
+    })
+}
+
+
+export { getMQTTConnection, testConnection };

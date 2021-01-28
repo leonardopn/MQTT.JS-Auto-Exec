@@ -17,6 +17,7 @@ const Config = props => {
     const [valueTopic, setValueTopic] = React.useState("");
     const [valueStartUp, setValueStartUp] = React.useState(false);
     const [valueProblem, setValueProblem] = React.useState("");
+    const [valueTestMQTT, setValueTestMQTT] = React.useState("");
 
     React.useEffect(() => {
         setValueIP(props.configs.serverIp);
@@ -40,6 +41,22 @@ const Config = props => {
             props.updateConfig(data);
         }).catch(error => {
             setLog(error.response.data.type + " - " + error.response.data.payload);
+        })
+    }
+
+    function testConnectionMQTT() {
+        let data = {
+            serverIp: valueIP,
+            user: valueUser,
+            pass: valuePass,
+            topic: valueTopic,
+            startup: valueStartUp
+        };
+
+        axios.post("http://localhost:8888/testServerMQTT", data).then(_ => {
+            setValueTestMQTT("true");
+        }).catch(error => {
+            setValueTestMQTT("false");
         })
     }
 
@@ -73,7 +90,8 @@ const Config = props => {
                         </tr>
                     </tbody>
                 </table>
-                <button>Testar conexão</button>
+                <button onClick={_ => testConnectionMQTT()}>Testar conexão</button>
+                <p>Status: {valueTestMQTT}</p>
             </Card>
             <Card class={"intern"}>
                 <h3>Cliente</h3>
