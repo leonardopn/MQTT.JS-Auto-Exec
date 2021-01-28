@@ -64,7 +64,7 @@ function getMQTTConnection(params) {
                 contadorReconnect = 1;
             }
 
-            const client = mqtt.connect(params.serverIp, { username: params.user, password: params.pass, keepalive: 5, reconnectPeriod: 1000, connectTimeout: 5000 });
+            const client = mqtt.connect(params.serverIp, { username: params.user, password: params.pass, keepalive: 5, reconnectPeriod: 5000, connectTimeout: 5000 });
             client.on("connect", () => {
                 subscribeTopic({ client, ...params });
             });
