@@ -110,7 +110,7 @@ router.post('/startServerMQTT', function (req, res) {
     getMQTTConnection(req.body).then(value =>{
         res.status(200).send(value);
     }).catch(error => {
-        res.status(404).send({ type: "ERRO", payload: error });
+        res.status(404).send(error);
     });
 });
 

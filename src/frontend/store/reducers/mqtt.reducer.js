@@ -1,7 +1,8 @@
 import types from "../actions/types"
 
 const initialState = {
-    status: true
+    status: true,
+    timer: false
 }
 
 export default function mqttReducer(state = initialState, action) {
@@ -11,7 +12,12 @@ export default function mqttReducer(state = initialState, action) {
                 ...state,
                 status: action.payload
             };
-        default: 
+        case types.UPDATE_TIMER_MQTT:
+            return {
+                ...state,
+                timer: action.payload
+            };
+        default:
             return state;
     }
 }

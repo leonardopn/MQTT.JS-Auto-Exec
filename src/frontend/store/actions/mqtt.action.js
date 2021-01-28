@@ -6,3 +6,10 @@ export function updateStatusMQTT(status) {
         payload: status
     }
 }
+
+export function updateTimerMQTT(status) {
+    return {
+        type: types.UPDATE_TIMER_MQTT,
+        payload: status
+    }
+}

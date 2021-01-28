@@ -1,5 +1,5 @@
 export { }
-import installExtension, { REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
+import installExtension, { REDUX_DEVTOOLS } from 'electron-devtools-installer';
 import startServer from "../src/backend/server"
 
 require('v8-compile-cache');
@@ -22,7 +22,7 @@ function startExtensionsDev(extensions) {
 
 function createWindow() {
     startServer().then(value => {
-        (isDev) && startExtensionsDev([REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS]);
+        (isDev) && startExtensionsDev([REDUX_DEVTOOLS]);
 
         console.log("Comandos carregados: " + value.payload.size + "\n");
 

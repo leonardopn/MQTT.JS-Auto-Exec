@@ -1,11 +1,9 @@
-import express from "express"
-import { getMQTTConnection } from "./config/mqttClient"
+import express from "express";
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import router from './config/routes';
 import { loadCommands, createFoldersApp } from './utils/DriveUtils';
 import { startServerSocket } from "./config/socketServer";
-import axios from "axios";
 
 const serverExpress = express();
 
@@ -43,8 +41,6 @@ function startServer() {
         try {
             startServerSocket().then(value => {
                 serverExpress.listen(porta, async _ => {
-                    console.log(`Backend escutando na porta ${porta}!`);
-                    console.log("Carregando comandos ...");
                     loadDb().then(value => {
                         resolve(value);
                     }).catch(error => {

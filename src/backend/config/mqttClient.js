@@ -1,7 +1,7 @@
 import mqtt from 'async-mqtt';
 import { io } from "../config/socketServer";
 
-let contadorReconnect = 0;
+let contadorReconnect = 1;
 
 function achaComandoEExecuta(comando) {
     io.sockets.emit("LOG_TERMINAL", `Procurando o comando: "${comando}"`);
@@ -22,11 +22,13 @@ function achaComandoEExecuta(comando) {
 }
 
 async function subscribeTopic(params) {
-    contadorReconnect = 0;
-    io.sockets.emit("LOG_TERMINAL", `Conexão ao servidor: ${params.serverIp} feita com sucesso!`);
-    io.sockets.emit("STATUS_MQTT", true);
     try {
-        params.client.subscribe(params.topic);
+        if (params.client.connected) {
+            contadorReconnect = 1;
+            io.sockets.emit("LOG_TERMINAL", `Conexão ao servidor: ${params.serverIp} feita com sucesso!`);
+            io.sockets.emit("STATUS_MQTT", true);
+            params.client.subscribe(params.topic);
+        }
     } catch (e) {
         console.log(e.stack);
     }
@@ -39,18 +41,19 @@ async function errorConnect(error) {
 async function reconnect(params) {
     io.sockets.emit("STATUS_MQTT", false);
     if (contadorReconnect <= 3) {
-        io.sockets.emit("LOG_TERMINAL", `Tentando se re-conectar ao servidor MQTT no endereço: ${params.serverIp}`);
+        io.sockets.emit("LOG_TERMINAL", `Tentativa ${contadorReconnect} de reconexão ao servidor MQTT no endereço: ${params.serverIp}`);
         contadorReconnect++;
     }
     else {
-        io.sockets.emit("LOG_TERMINAL", `Número máximo de tentativas de re-conexão foram feitas, tente novamente mais tarde.`);
+        io.sockets.emit("LOG_TERMINAL", `Número máximo de tentativas de re-conexão foram feitas, tentando novamente em 30 segundos.`);
+        io.sockets.emit("STATUS_TIMER_MQTT", true);
         params.client.end();
-        contadorReconnect = 0;
+        contadorReconnect = 1;
     }
 }
 
 async function offLine() {
-    io.sockets.emit("LOG_TERMINAL", `Conexão com o servidor MQTT foi perdida.`);
+    io.sockets.emit("LOG_TERMINAL", `Servidor MQTT offline.`);
 }
 
 function getMQTTConnection(params) {
@@ -58,11 +61,14 @@ function getMQTTConnection(params) {
         try {
             if (global.clientMQTT) {
                 global.clientMQTT.end();
+                contadorReconnect = 1;
             }
+
             const client = mqtt.connect(params.serverIp, { username: params.user, password: params.pass, keepalive: 5, reconnectPeriod: 1000, connectTimeout: 5000 });
             client.on("connect", () => {
-                subscribeTopic({ client, ...params })
+                subscribeTopic({ client, ...params });
             });
+
             client.on("error", error => {
                 errorConnect(error)
             });
@@ -74,9 +80,9 @@ function getMQTTConnection(params) {
                 io.sockets.emit("LOG_TERMINAL", `A mensagem: "${message.toString()}" foi recebida do servidor MQTT.`);
                 achaComandoEExecuta(message.toString());
             });
-
             global.clientMQTT = client;
             resolve({ status: "OK", payload: "OK" });
+
         } catch (error) {
             reject({ status: "ERRO", payload: error });
         }
