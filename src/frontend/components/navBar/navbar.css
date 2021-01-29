@@ -26,6 +26,7 @@
 
 .tableNavbar button:hover {
     background-color: rgb(95, 95, 95);
+    cursor          : pointer;
     transition      : 0.3s;
 }
 
