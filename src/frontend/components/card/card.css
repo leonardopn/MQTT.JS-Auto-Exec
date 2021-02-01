@@ -5,12 +5,10 @@
     box-shadow        : 0px 0px 3px 0px rgba(50, 50, 50, 1);
     padding           : 20px;
     margin            : 20px;
-    flex              : 1;
 }
 
 #card.intern {
     background-color: #F5F6FA;
-    padding         : 0px 20px 18px 20px;
     flex-wrap       : wrap;
 }
 
@@ -26,4 +24,5 @@
     height          : 80%;
     overflow        : auto;
     background-color: #fff;
+    flex            : 1;
 }

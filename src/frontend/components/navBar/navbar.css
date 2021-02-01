@@ -31,12 +31,12 @@
 }
 
 .tableNavbar button:active {
-    background-color: rgb(0, 140, 255);
+    background-color: #5162ff;
     transition      : 0.3s;
 }
 
 .tableNavbar #buttonActive {
-    background-color: rgb(0, 140, 255);
+    background-color: #5162ff;
 }
 
 #statusMQTT {

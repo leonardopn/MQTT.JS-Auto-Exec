@@ -47,7 +47,7 @@
 }
 
 #divFlexStatusMQTTGreen {
-    background-color  : rgb(0, 255, 128);
+    background-color  : #39f07f;
     border-radius     : 13px;
     padding-right     : 30px;
     -webkit-box-shadow: 0px 0px 5px -1px #000000;

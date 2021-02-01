@@ -3,7 +3,9 @@ import Card from "../card/Card";
 import axios from "axios";
 import { connect } from "react-redux";
 import { getCommands } from "../../store/actions/commandsAction";
-import { setLog } from "../../../backend/utils/LogUtils"
+import { setLog } from "../../../backend/utils/LogUtils";
+import DivFlex from "../divFlex/DivFlex";
+import "./command.css"
 
 const Command = props => {
     const [inputValueName, setValueInputName] = useState(props.name);
@@ -60,7 +62,7 @@ const Command = props => {
 
     function testCommand() {
         axios.get("http://localhost:8888/execCommand/" + props.id).then(response => {
-            setLog(`Comando "${props.name}" executado! Saída: ${response.data}`);  
+            setLog(`Comando "${props.name}" executado! Saída: ${response.data}`);
         }).catch(error => {
             setLog(JSON.parse(error.request.response).payload);
         });
@@ -107,15 +109,20 @@ const Command = props => {
             )
         default:
             return (
-                <Card class="intern">
-                    <p>Id: {props.id}</p>
-                    <p>Título: {props.name}</p>
-                    <p>Comando: {props.command}</p>
-                    <p>Pasta: {props.folder}</p>
-                    <button onClick={_ => removeCommand()}>Excluir</button>
-                    <button onClick={_ => testCommand()}>Testar comando</button>
-                    <button onClick={_ => setType("UPDATE")}>Atualizar</button>
-                </Card>
+
+                <div className="divCommandIntern">
+                    <h2>ID: <b>{props.id}</b></h2>
+                    <p><b>Título:</b> {props.name}</p>
+                    <p><b>Comando:</b> {props.command}</p>
+                    <p><b>Localização:</b> {props.folder}</p>
+                    <br></br>
+                    <DivFlex type="Center">
+                        <button className="buttonCancel" onClick={_ => removeCommand()}>Excluir</button>
+                        <button className="buttonTest" onClick={_ => testCommand()}>Executar</button>
+                        <button className="buttonUpdate" onClick={_ => setType("UPDATE")}>Atualizar</button>
+                    </DivFlex>
+                </div>
+
             );
     }
 }

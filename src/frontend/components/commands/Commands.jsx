@@ -4,6 +4,7 @@ import DivFlex from "../divFlex/DivFlex"
 import iconCmdDark from "../../img/cmd_dark_100.png"
 import Command from "../command/Command"
 import { connect } from "react-redux";
+import "./commands.css"
 
 const Commands = props => {
     const [newCommand, setNewCommand] = useState("");
@@ -18,9 +19,11 @@ const Commands = props => {
                 <img src={iconCmdDark} className="iconM" alt="cmd_icon"></img>
                 <h2>Comandos</h2>
             </DivFlex>
+            <br></br>
             <DivFlex>
-                <button onClick={e => criarComando()}>Criar Comando</button>
+                <button className="buttonCreate" onClick={e => criarComando()}>Criar Comando</button>
             </DivFlex>
+            <br></br>
             {newCommand}
             {props.arrayCommands}
         </Card>
