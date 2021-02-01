@@ -3,12 +3,17 @@ import "./terminal.css"
 import { connect } from "react-redux"
 
 const Terminal = props => {
+
     React.useEffect(() => {
-        function autoScroll() {
-            const textarea = document.getElementById('textAreaTerminal');
-            textarea.scrollTop = textarea.scrollHeight;
+        let isMounted = true;
+        if (isMounted) {
+            function autoScroll() {
+                const textarea = document.getElementById('textAreaTerminal');
+                textarea.scrollTop = textarea.scrollHeight;
+            }
+            autoScroll();
         }
-        autoScroll();
+        return () => { isMounted = false };
     }, [props.textTextArea]);
 
 
