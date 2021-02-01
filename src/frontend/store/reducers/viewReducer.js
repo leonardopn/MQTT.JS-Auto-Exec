@@ -1,8 +1,7 @@
 import types from "../actions/types"
-import Terminal from "../../components/terminal/Terminal"
 
 const initialState = {
-    selectedView: <Terminal></Terminal>
+    selectedView: 0
 }
 
 export default function viewReducer(state = initialState, action) {

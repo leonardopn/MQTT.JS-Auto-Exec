@@ -19,17 +19,23 @@ const Commands = props => {
     }
 
     return (
-        <Card class="main">
-            <DivFlex>
-                <img src={iconCmdDark} className="iconM" alt="cmd_icon"></img>
-                <h2>Comandos</h2>
-            </DivFlex>
-            <DivFlex>
-                <button onClick={e => criarComando()}>Criar Comando</button>
-            </DivFlex>
-            {newCommand}
-            {props.arrayCommands}
-        </Card>
+        <div style={{
+            position: "absolute", flex: 1, width: "100%",
+            height: "100%"
+
+        }}>
+            <Card class="main">
+                <DivFlex>
+                    <img src={iconCmdDark} className="iconM" alt="cmd_icon"></img>
+                    <h2>Comandos</h2>
+                </DivFlex>
+                <DivFlex>
+                    <button onClick={e => criarComando()}>Criar Comando</button>
+                </DivFlex>
+                {newCommand}
+                {props.arrayCommands}
+            </Card>
+        </div >
     );
 }
 

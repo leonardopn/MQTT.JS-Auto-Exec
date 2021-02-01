@@ -3,9 +3,6 @@ import "./navbar.css"
 import iconConsoleWhite from "../../img/console_white_100.png"
 import iconEnterKeyWhite from "../../img/enter_key_white_100.png"
 import iconConfigWhite from "../../img/config_white_100.png"
-import Terminal from "../terminal/Terminal"
-import Config from "../configComponent/Config"
-import Commands from "../commands/Commands";
 import StatusMQTT from "../statusMqtt/StatusMQTT"
 import { connect } from "react-redux";
 import { updateView } from "../../store/actions/views"
@@ -13,21 +10,18 @@ import { updateView } from "../../store/actions/views"
 const NavBar = props => {
 
     function changeView(option) {
-        const terminal = <Terminal></Terminal>;
-        const config = <Config></Config>;
-        const commands = <Commands></Commands>;
         switch (option) {
             case "TERMINAL":
-                props.updateView(terminal);
+                props.updateView(0);
                 return;
             case "CONFIG":
-                props.updateView(config);
+                props.updateView(1);
                 return;
             case "COMMANDS":
-                props.updateView(commands);
+                props.updateView(2);
                 return;
             default:
-                props.updateView(terminal);
+                props.updateView(0);
                 return;
         }
     }
