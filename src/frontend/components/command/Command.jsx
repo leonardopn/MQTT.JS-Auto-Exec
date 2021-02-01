@@ -90,28 +90,25 @@ const Command = props => {
             );
         case "UPDATE":
             return (
-                <Card class="intern">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td><b><label htmlFor={"nameComand" + props.id}>Título: </label></b></td>
-                                <td> <input type="text" name={"nameComand" + props.id} defaultValue={inputValueName} className="inputDefault" onChange={e => setValueInputName(e.target.value)}></input></td>
-                            </tr>
-                            <tr>
-                                <td><b><label htmlFor={"scriptComand" + props.id}>Comando: </label></b></td>
-                                <td>  <input type="text" name={"scriptComand" + props.id} defaultValue={inputValueCommand} className="inputDefault" onChange={e => setValueInputCommand(e.target.value)}></input></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <button onClick={_ => updateCommand()}>Atualizar</button>
-                    <button onClick={_ => resetValuesUpdate()}>Cancelar</button>
-                </Card>
+                <div className="divCommandIntern">
+                    <DivFlex>
+                        <input placeholder="Insira o nome do comando." type="text" name={"nameComand" + props.id} defaultValue={inputValueName} className="inputDefault" onChange={e => setValueInputName(e.target.value)}></input>
+                        <input placeholder="Insira o comando que será executado" type="text" name={"scriptComand" + props.id} defaultValue={inputValueCommand} className="inputDefault" onChange={e => setValueInputCommand(e.target.value)}></input>
+                    </DivFlex>
+                    <br></br>
+                    <DivFlex type="Center">
+                        <button className="buttonCancel" onClick={_ => resetValuesUpdate()}>Cancelar</button>
+                        <button className="buttonUpdate" onClick={_ => updateCommand()}>Atualizar</button>
+                    </DivFlex>
+
+                </div>
             )
         default:
             return (
-
                 <div className="divCommandIntern">
-                    <h2>ID: <b>{props.id}</b></h2>
+                    <DivFlex type="Center">
+                        <h2>ID: {props.id}</h2>
+                    </DivFlex>
                     <p><b>Título:</b> {props.name}</p>
                     <p><b>Comando:</b> {props.command}</p>
                     <p><b>Localização:</b> {props.folder}</p>
