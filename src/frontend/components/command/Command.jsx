@@ -5,12 +5,19 @@ import { connect } from "react-redux";
 import { getCommands } from "../../store/actions/commandsAction";
 import { setLog } from "../../../backend/utils/LogUtils";
 import DivFlex from "../divFlex/DivFlex";
-import "./command.css"
+import "./command.css";
+import { useSpring, animated as a } from 'react-spring';
 
 const Command = props => {
     const [inputValueName, setValueInputName] = useState(props.name);
     const [inputValueCommand, setValueInputCommand] = useState(props.command);
     const [type, setType] = useState(props.type);
+
+    const { transform, opacity } = useSpring({
+        opacity: type === "CREATED" || type === "NEW" ? 1 : 0,
+        transform: `perspective(1000px) rotateX(${type === "CREATED" || type === "NEW" ? 0 : 0}deg)`,
+        config: { mass: 1, tension: 1000, friction: 50 }
+    })
 
     function closeNewCommand() {
         props.deleteNewCommand("");
@@ -53,7 +60,11 @@ const Command = props => {
         };
 
         axios.put("http://localhost:8888/updatecommand", data).then(_ => {
-            props.getCommands();
+            setType("CREATED");
+            setTimeout(() => {
+                props.getCommands();
+            }, 400)
+
             setLog(`Comando "${props.name}" atualizado!`);
         }).catch(error => {
             setLog(JSON.parse(error.request.response).payload);
@@ -71,7 +82,7 @@ const Command = props => {
     switch (type) {
         case "NEW":
             return (
-                <Card class="intern">
+                <div className="divCommandIntern">
                     <table>
                         <tbody>
                             <tr>
@@ -86,26 +97,27 @@ const Command = props => {
                     </table>
                     <button onClick={_ => addCommand()}>Criar</button>
                     <button onClick={_ => closeNewCommand()}>X</button>
-                </Card>
+                </div>
             );
         case "UPDATE":
             return (
-                <div className="divCommandIntern">
-                    <DivFlex>
-                        <input placeholder="Insira o nome do comando." type="text" name={"nameComand" + props.id} defaultValue={inputValueName} className="inputDefault" onChange={e => setValueInputName(e.target.value)}></input>
-                        <input placeholder="Insira o comando que será executado" type="text" name={"scriptComand" + props.id} defaultValue={inputValueCommand} className="inputDefault" onChange={e => setValueInputCommand(e.target.value)}></input>
-                    </DivFlex>
-                    <br></br>
-                    <DivFlex type="Center">
-                        <button className="buttonCancel" onClick={_ => resetValuesUpdate()}>Cancelar</button>
-                        <button className="buttonUpdate" onClick={_ => updateCommand()}>Atualizar</button>
-                    </DivFlex>
-
-                </div>
+                <a.div className="divCommandIntern" style={{ opacity: opacity.interpolate(o => 1 - o), transform: transform.interpolate(t => `${t} rotateX(180deg)`) }} >
+                    <div id="divSpringRotacionada">
+                        <DivFlex>
+                            <input placeholder="Insira o nome do comando." type="text" name={"nameComand" + props.id} defaultValue={inputValueName} className="inputDefault" onChange={e => setValueInputName(e.target.value)}></input>
+                            <input placeholder="Insira o comando que será executado" type="text" name={"scriptComand" + props.id} defaultValue={inputValueCommand} className="inputDefault" onChange={e => setValueInputCommand(e.target.value)}></input>
+                        </DivFlex>
+                        <br></br>
+                        <DivFlex type="Center">
+                            <button className="buttonCancel" onClick={_ => resetValuesUpdate()}>Cancelar</button>
+                            <button className="buttonUpdate" onClick={_ => updateCommand()}>Atualizar</button>
+                        </DivFlex>
+                    </div>
+                </a.div>
             )
         default:
             return (
-                <div className="divCommandIntern">
+                <a.div className="divCommandIntern" style={{ opacity, transform }} >
                     <DivFlex type="Center">
                         <h2>ID: {props.id}</h2>
                     </DivFlex>
@@ -118,8 +130,7 @@ const Command = props => {
                         <button className="buttonTest" onClick={_ => testCommand()}>Executar</button>
                         <button className="buttonUpdate" onClick={_ => setType("UPDATE")}>Atualizar</button>
                     </DivFlex>
-                </div>
-
+                </a.div>
             );
     }
 }
