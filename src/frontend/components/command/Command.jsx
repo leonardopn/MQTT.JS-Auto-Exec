@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Card from "../card/Card";
 import axios from "axios";
 import { connect } from "react-redux";
 import { getCommands } from "../../store/actions/commandsAction";
@@ -103,6 +102,9 @@ const Command = props => {
             return (
                 <a.div className="divCommandIntern" style={{ opacity: opacity.interpolate(o => 1 - o), transform: transform.interpolate(t => `${t} rotateX(180deg)`) }} >
                     <div id="divSpringRotacionada">
+                    <DivFlex type="Center">
+                        <h2>ID: {props.id}</h2>
+                    </DivFlex>
                         <DivFlex>
                             <input placeholder="Insira o nome do comando." type="text" name={"nameComand" + props.id} defaultValue={inputValueName} className="inputDefault" onChange={e => setValueInputName(e.target.value)}></input>
                             <input placeholder="Insira o comando que será executado" type="text" name={"scriptComand" + props.id} defaultValue={inputValueCommand} className="inputDefault" onChange={e => setValueInputCommand(e.target.value)}></input>

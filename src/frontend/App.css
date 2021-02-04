@@ -25,3 +25,86 @@
   align-items    : center;
   will-change    : transform, opacity;
 }
+
+.buttonCreate {
+  background-color: #2DBF64;
+  outline         : none;
+  border          : none;
+  color           : #fff;
+  flex-grow       : 1;
+  border-radius   : 50px;
+  font-size       : 18px;
+  padding         : 3px 20px 3px 20px;
+  margin          : 0 10px 0 10px;
+  box-shadow      : 0px 0px 15px -5px #000000;
+  text-shadow     : 0px 0px 5px #32D46F;
+  transition      : 0.3s;
+}
+
+.buttonCreate:hover {
+  background-color: #40df7d;
+  cursor          : pointer;
+  transition      : 0.8s;
+}
+
+.buttonCancel {
+  background-color         : #ff4242;
+  outline                  : none;
+  border                   : none;
+  flex-grow                : 1;
+  color                    : #fff;
+  border-top-left-radius   : 50px;
+  border-bottom-left-radius: 50px;
+  font-size                : 18px;
+  padding                  : 3px 20px 3px 20px;
+  box-shadow               : 0px 0px 15px -5px #000000;
+  text-shadow              : 0px 0px 5px #ff1d1d;
+  transition               : 0.3s;
+}
+
+.buttonCancel:hover {
+  background-color: #f66d6d;
+  cursor          : pointer;
+  transition      : 0.8s;
+}
+
+.buttonUpdate {
+  flex-grow                 : 1;
+  background-color          : #429aff;
+  outline                   : none;
+  border                    : none;
+  color                     : #fff;
+  border-top-right-radius   : 50px;
+  border-bottom-right-radius: 50px;
+  font-size                 : 18px;
+  padding                   : 3px 20px 3px 20px;
+  box-shadow                : 0px 0px 15px -5px #000000;
+  text-shadow               : 0px 0px 5px #0077ff;
+  transition                : 0.3s;
+}
+
+.buttonUpdate:hover {
+  background-color: #5fa9fd;
+  cursor          : pointer;
+  transition      : 0.8s;
+}
+
+.buttonTest {
+  background-color: #6B6BFA;
+  outline         : none;
+  border          : none;
+  flex-grow       : 1;
+  color           : #fff;
+  font-size       : 18px;
+  padding         : 3px 20px 3px 20px;
+  box-shadow      : 0px 0px 15px -5px #000000;
+  text-shadow     : 0px 0px 5px #6B6BFA;
+  transition      : 0.3s;
+}
+
+.buttonTest:hover {
+  background-color: #7e7eff;
+  cursor          : pointer;
+  transition      : 0.8s;
+}
+

@@ -5,3 +5,19 @@
     color           : rgb(70, 70, 70);
     margin          : 10px
 }
+
+.buttonTest.buttonOfConfig {
+    border-top-right-radius   : 50px;
+    border-bottom-right-radius: 50px;
+}
+
+.buttonTest.buttonOfConfigRound {
+    border-radius: 50px;
+}
+
+.buttonUpdate.buttonOfConfig {
+    border-top-left-radius   : 50px;
+    border-bottom-left-radius: 50px;
+    border-top-right-radius   : 0px;
+    border-bottom-right-radius: 0px;
+}
