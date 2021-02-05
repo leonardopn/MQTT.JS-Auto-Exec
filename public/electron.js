@@ -2,12 +2,12 @@ export { }
 import installExtension, { REDUX_DEVTOOLS } from 'electron-devtools-installer';
 import startServer from "../src/backend/server"
 
-require('v8-compile-cache');
+import 'v8-compile-cache';
 
-const electron = require('electron');
+import electron from 'electron';
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
-const isDev = require('electron-is-dev');
+import isDev from 'electron-is-dev';
 
 let mainWindow;
 

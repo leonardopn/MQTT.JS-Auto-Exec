@@ -7,7 +7,7 @@ import { startServerSocket } from "./config/socketServer";
 
 const serverExpress = express();
 
-var corsOptions = {
+const corsOptions = {
     credentials: true,
     origin: ['http://localhost:3000'],
     optionsSuccessStatus: 200

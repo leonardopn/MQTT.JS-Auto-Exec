@@ -1,14 +1,16 @@
 import { getMQTTConnection, testConnection } from "./mqttClient";
-const express = require('express')
-const { configDefault, verificaObjetoDefault } = require("../config/defaultConfigs")
+import express from 'express'
+import { configDefault, verificaObjetoDefault } from "../config/defaultConfigs"
 const router = express.Router();
-const { deleteCommand,
+import {
+    deleteCommand,
     updateCommand,
     getCommands,
     createFileCommand,
     executeCommand,
     getConfig,
-    updateConfig } = require("../utils/DriveUtils");
+    updateConfig
+} from "../utils/DriveUtils";
 
 router.get("/", (req, res) => {
     res.status(200).send({ response: "I am alive" });

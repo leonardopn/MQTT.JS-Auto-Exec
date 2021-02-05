@@ -1,6 +1,6 @@
 import { exec } from 'child_process';
 
-module.exports = class Command {
+export default class Command {
     constructor(id, command, name, path) {
         this.id = id;
         this.command = command;

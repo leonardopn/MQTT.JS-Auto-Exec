@@ -1,10 +1,10 @@
 import { configDefault } from "../config/defaultConfigs";
 
-const fs = require("fs");
-const home = require('os').homedir();
-const Command = require("../model/entities/Command")
+import fs from "fs";
+import {homedir} from 'os';
+import Command from "../model/entities/Command";
 
-const folderApp = home + "/.mqtt_js/";
+const folderApp = homedir + "/.mqtt_js/";
 
 function createFoldersApp() {
     return new Promise((resolve, reject) => {
