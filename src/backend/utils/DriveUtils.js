@@ -148,8 +148,8 @@ function updateCommand(data) {
         if (data.id && data.command && data.name) {
             let valor = global.commands.get(data.id);
             if (valor) {
-                createFileCommand(data).then(valueNext => {//NOTE não utiliza padrão de payload pq ele já recebe um payload
-                    deleteCommand(data.id).then(_ => {
+                deleteCommand(data.id).then(_ => {
+                    createFileCommand(data).then(valueNext => {//NOTE não utiliza padrão de payload pq ele já recebe um payload
                         resolve(valueNext);
                     }).catch(error => {//NOTE não utiliza padrão de payload pq ele já recebe um payload
                         reject(error);

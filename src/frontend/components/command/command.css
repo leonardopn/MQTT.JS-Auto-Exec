@@ -18,3 +18,19 @@
 #divSpringRotacionada {
     transform: rotateX(180deg);
 }
+
+.buttonUpdate.buttonOfCommand {
+    border-top-left-radius   : 50px;
+    border-bottom-left-radius: 50px;
+    border-top-right-radius   : 0px;
+    border-bottom-right-radius: 0px;
+    flex:1
+}
+
+.buttonCancel.buttonOfCommand {
+    border-top-left-radius   : 0px;
+    border-bottom-left-radius: 0px;
+    border-top-right-radius   : 50px;
+    border-bottom-right-radius: 50px;
+    flex:1
+}

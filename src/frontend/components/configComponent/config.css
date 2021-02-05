@@ -9,10 +9,12 @@
 .buttonTest.buttonOfConfig {
     border-top-right-radius   : 50px;
     border-bottom-right-radius: 50px;
+    flex:1
 }
 
 .buttonTest.buttonOfConfigRound {
     border-radius: 50px;
+    flex:1
 }
 
 .buttonUpdate.buttonOfConfig {
@@ -20,4 +22,5 @@
     border-bottom-left-radius: 50px;
     border-top-right-radius   : 0px;
     border-bottom-right-radius: 0px;
+    flex:1
 }

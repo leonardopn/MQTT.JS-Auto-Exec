@@ -4,14 +4,24 @@ import DivFlex from "../divFlex/DivFlex"
 import iconCmdDark from "../../img/cmd_dark_100.png"
 import Command from "../command/Command"
 import { connect } from "react-redux";
-import "./commands.css"
+import "./commands.css";
+import { useTransition, animated } from 'react-spring'
+
 
 const Commands = props => {
-    const [newCommand, setNewCommand] = useState("");
+    const [toggle, setToggle] = useState(0);
 
-    function criarComando() {
-        setNewCommand(<Command type={"NEW"} deleteNewCommand={setNewCommand}></Command>);
-    }
+    const setNewCommand = React.useCallback(() => setToggle(state => (state + 1) % 2), [])
+
+    const pages = [
+        "", <Command type={"NEW"} closeNewCommand={setNewCommand}></Command>
+    ]
+
+    const transitions = useTransition(toggle, item => item, {
+        from: { opacity: 0, transform: 'translate3d(100%,0,0)' },
+        enter: { opacity: 1, transform: 'translate3d(0%,0,0)' },
+        leave: { opacity: 0, transform: 'translate3d(-50%,0,0)' },
+    });
 
     return (
         <Card class="main">
@@ -21,10 +31,15 @@ const Commands = props => {
             </DivFlex>
             <br></br>
             <DivFlex>
-                <button className="buttonCreate" onClick={e => criarComando()}>Criar Comando</button>
+                <button className="buttonCreate" onClick={setNewCommand}>Criar Comando</button>
             </DivFlex>
             <br></br>
-            {newCommand}
+            {
+                transitions.map(({ item, props, key }) => {
+                    const page = pages[item]
+                    return <animated.div key={key} style={props}>{page}</animated.div>
+                })
+            }
             {props.arrayCommands}
         </Card>
     );
