@@ -72,7 +72,7 @@
   "build": {
     "appId": "br.com.leonardopetta.mqtt.js.auto.exec",
     "productName": "MQTT.JS Auto Exec",
-    "copyright": "Copyright © 2020 Leonardo Petta do Nascimento",
+    "copyright": "Copyright © 2020-2021 Leonardo Petta do Nascimento",
     "mac": {
       "category": "public.app-category.utilities"
     },
