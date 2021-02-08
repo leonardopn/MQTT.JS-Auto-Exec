@@ -1,6 +1,6 @@
-import { exec } from 'child_process';
+const { exec } = require('child_process');
 
-export default class Command {
+module.exports = class Command {
     constructor(id, command, name, path) {
         this.id = id;
         this.command = command;

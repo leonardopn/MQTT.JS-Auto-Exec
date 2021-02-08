@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import axios from "axios";
 import { updateStatusMQTT, updateTimerMQTT } from "../../store/actions/mqtt.action";
-import { setLog } from "../../../backend/utils/LogUtils";
+import { setLog } from "../../scripts/LogUtils";
 import DivFlex from "../divFlex/DivFlex";
 import ReactLoading from 'react-loading';
 import "./statusMQTT.css"

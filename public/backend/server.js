@@ -1,9 +1,9 @@
-import express from "express";
-import bodyParser from 'body-parser';
-import cors from 'cors';
-import router from './config/routes';
-import { loadCommands, createFoldersApp } from './utils/DriveUtils';
-import { startServerSocket } from "./config/socketServer";
+const express = require("express");
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const router = require('./config/routes.js');
+const { loadCommands, createFoldersApp } = require('./utils/DriveUtils.js');
+const { startServerSocket } = require("./config/socketServer.js");
 
 const serverExpress = express();
 
@@ -56,4 +56,4 @@ function startServer() {
     })
 }
 
-export default startServer;
+module.exports = startServer;

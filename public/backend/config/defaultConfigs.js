@@ -1,4 +1,4 @@
-import _ from "lodash";
+const _ = require("lodash");
 
 const configDefault = {
     serverIp: "",
@@ -16,4 +16,4 @@ function verificaObjetoDefault(data, objComparativo) {
     return _.isEqual(propsData, propsOnjComparativo);
 }
 
-export { configDefault, verificaObjetoDefault }
+module.exports = { configDefault, verificaObjetoDefault }

@@ -1,8 +1,8 @@
-import { configDefault } from "../config/defaultConfigs";
+const { configDefault } = require("../config/defaultConfigs.js");
 
-import fs from "fs";
-import {homedir} from 'os';
-import Command from "../model/entities/Command";
+const fs = require("fs");
+const { homedir } = require('os');
+const Command = require("../model/entities/Command.js");
 
 const folderApp = homedir + "/.mqtt_js/";
 
@@ -238,4 +238,4 @@ function updateConfig(data) {
     });
 }
 
-export { updateConfig, createFoldersApp, loadCommands, createFileCommand, getCommands, deleteCommand, updateCommand, executeCommand, getConfig };
+module.exports = { updateConfig, createFoldersApp, loadCommands, createFileCommand, getCommands, deleteCommand, updateCommand, executeCommand, getConfig };

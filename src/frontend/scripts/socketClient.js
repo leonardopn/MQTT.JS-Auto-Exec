@@ -1,5 +1,5 @@
 import socketIOClient from "socket.io-client";
-import { setLog } from "../../backend/utils/LogUtils";
+import { setLog } from "./LogUtils";
 import store from "../../index";
 import { updateStatusMQTT, updateTimerMQTT } from "../store/actions/mqtt.action";
 const ENDPOINT = "http://localhost:8889";

@@ -1,5 +1,5 @@
-import mqtt from 'async-mqtt';
-import { io } from "../config/socketServer";
+const mqtt = require('async-mqtt');
+const { io } = require("./socketServer.js");
 
 let contadorReconnect = 1;
 
@@ -92,7 +92,7 @@ function getMQTTConnection(params) {
 function testConnection(params) {
     return new Promise((resolve, reject) => {
         try {
-            const client = mqtt.connect(params.serverIp, { username: params.user, password: params.pass, connectTimeout: 10000});
+            const client = mqtt.connect(params.serverIp, { username: params.user, password: params.pass, connectTimeout: 10000 });
             client.on("connect", () => {
                 resolve({ status: "OK", payload: "OK" });
                 client.end();
@@ -124,4 +124,4 @@ function testConnection(params) {
 }
 
 
-export { getMQTTConnection, testConnection };
+module.exports = { getMQTTConnection, testConnection };

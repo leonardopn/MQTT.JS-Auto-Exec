@@ -1,8 +1,7 @@
-import { getMQTTConnection, testConnection } from "./mqttClient";
-import express from 'express'
-import { configDefault, verificaObjetoDefault } from "../config/defaultConfigs"
-const router = express.Router();
-import {
+const { getMQTTConnection, testConnection } = require("./mqttClient.js");
+const express = require('express');
+const { configDefault, verificaObjetoDefault } = require("./defaultConfigs.js");
+const {
     deleteCommand,
     updateCommand,
     getCommands,
@@ -10,7 +9,9 @@ import {
     executeCommand,
     getConfig,
     updateConfig
-} from "../utils/DriveUtils";
+} = require("../utils/DriveUtils.js");
+
+const router = express.Router();
 
 router.get("/", (req, res) => {
     res.status(200).send({ response: "I am alive" });
@@ -124,4 +125,4 @@ router.post('/testServerMQTT', function (req, res) {
     });
 });
 
-export default router;
+module.exports = router;
