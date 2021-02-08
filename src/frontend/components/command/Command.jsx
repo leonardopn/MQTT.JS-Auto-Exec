@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import { getCommands } from "../../store/actions/commandsAction";
-import { setLog } from "../../../backend/utils/LogUtils";
+import { setLog } from "../../scripts/LogUtils";
 import DivFlex from "../divFlex/DivFlex";
 import "./command.css";
 import { useSpring, animated as a } from 'react-spring';

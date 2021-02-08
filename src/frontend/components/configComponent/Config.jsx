@@ -11,8 +11,7 @@ import ReactLoading from 'react-loading';
 import iconCheck from "../../img/check_color_100.png"
 import iconClose from "../../img/close_color_100.png";
 import Switch from 'react-input-switch';
-
-const { setLog } = require("../../../backend/utils/LogUtils")
+import { setLog } from "../../scripts/LogUtils";
 
 const Config = props => {
     const [valueIP, setValueIP] = React.useState("");

@@ -1,7 +1,7 @@
 import store from "../../index.js"
-import { generateDate } from "./DateUtils"
+import generateDate from "./DateUtils"
 
-import {updateTextTextarea} from "../../frontend/store/actions/terminal"
+import { updateTextTextarea } from "../store/actions/terminal.js"
 
 function setLog(text) {
     const texto = store.getState().terminal.textTextArea;

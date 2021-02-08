@@ -1,7 +1,9 @@
-import http from "http"
+const http = require("http");
+const { Server } = require('socket.io');
+
 const server = http.createServer();
 
-const io = require('socket.io')(server, {
+const io = new Server(server, {
     cors: {
         origin: '*',
     }
@@ -27,4 +29,4 @@ function startServerSocket() {
     })
 }
 
-export { startServerSocket, io };
+module.exports = { startServerSocket, io };
