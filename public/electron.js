@@ -2,9 +2,12 @@ require('v8-compile-cache');
 const startServer = require("./backend/server.js");
 const path = require('path');
 const electron = require('electron');
+const nativeImage = electron.nativeImage;
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const isDev = require('electron-is-dev');
+const os = require('os');
+const icon = nativeImage.createFromPath(os.platform() === "linux"? __dirname + '/icon.png': __dirname + '/icon.ico'); 
 
 let mainWindow;
 
@@ -15,6 +18,7 @@ function createWindow() {
             width: 800, height: 600, webPreferences: {
                 nodeIntegration: true,
             },
+            icon: icon
         });
 
         mainWindow.setMaximumSize(800, 600);
