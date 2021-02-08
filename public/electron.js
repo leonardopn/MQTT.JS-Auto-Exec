@@ -7,7 +7,7 @@ const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const isDev = require('electron-is-dev');
 const os = require('os');
-const icon = nativeImage.createFromPath(os.platform() === "linux"? __dirname + '/icon.png': __dirname + '/icon.ico'); 
+const icon = nativeImage.createFromPath(os.platform() === "linux" ? __dirname + '/icon.png' : __dirname + '/icon.ico');
 
 let mainWindow;
 
@@ -21,8 +21,50 @@ function createWindow() {
             icon: icon
         });
 
+        tray = new electron.Tray(icon)
+        const contextMenu = electron.Menu.buildFromTemplate([
+            {
+                label: 'MQTT.JS Auto Exec',
+                enabled: false
+            },
+            {
+                label: 'Abrir',
+                click: () => {
+                    mainWindow.show(true);
+                }
+            },
+            {
+                label: 'Sobre',
+                click: () => {
+                    mainWindow.show(true);
+                }
+            },
+            {
+                label: 'Fechar',
+                click: function () {
+                    process.exit(0);
+                }
+            }
+        ])
+        tray.setToolTip('MQTT.JS Auto Exec');
+        tray.setTitle('MQTT.JS Auto Exec');
+        tray.setContextMenu(contextMenu)
+
         mainWindow.setMaximumSize(800, 600);
         mainWindow.setMinimumSize(800, 600);
+
+        mainWindow.on('minimize', function (event) {
+            event.preventDefault();
+            mainWindow.hide();
+        });
+
+        mainWindow.on('close', function (event) {
+            if (!app.isQuiting) {
+                event.preventDefault();
+                mainWindow.hide();
+            }
+            return false;
+        })
 
         if (isDev) {
             const { default: installExtension, REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } = require('electron-devtools-installer');
@@ -38,9 +80,6 @@ function createWindow() {
             mainWindow.loadURL(`file://${path.resolve(__dirname, '..', 'build', 'index.html')}`)
         }
 
-        mainWindow.on('closed', function () {
-            mainWindow = null
-        });
     }).catch(error => {
         console.log(error);
         if (error.type === "ERRO") {
@@ -49,20 +88,8 @@ function createWindow() {
         if (error.type === "WARNING") {
             console.log("Pelo menos um arquivo de comando está fora do padrão! Por favor, arrume: ", error.payload);
         }
-        process.exit(0)
+        process.exit(0);
     });
 }
 
 app.on('ready', createWindow);
-
-app.on('window-all-closed', function () {
-    if (process.platform !== 'darwin') {
-        app.quit()
-    }
-});
-
-app.on('activate', function () {
-    if (mainWindow === null) {
-        createWindow()
-    }
-});
