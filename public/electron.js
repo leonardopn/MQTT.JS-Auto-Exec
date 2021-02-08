@@ -36,7 +36,19 @@ function createWindow() {
             {
                 label: 'Sobre',
                 click: () => {
-                    mainWindow.show(true);
+                    const about = new BrowserWindow({
+                        width: 800, height: 600, webPreferences: {
+                            nodeIntegration: true,
+                        },
+                        icon: icon
+                    });
+                    if (!isDev) {
+                        about.loadURL(`file://${path.resolve(__dirname, '..', 'build', 'about.html')}`)
+                    }
+                    else {
+                        about.loadURL(`file://${path.resolve(__dirname, 'about.html')}`)
+                    }
+                    about.show();
                 }
             },
             {
