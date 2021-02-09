@@ -1,6 +1,7 @@
 # Getting Started with Create React App
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/8bd6cf220f4945418908d881361e60d2)](https://app.codacy.com/gh/leonardopn/mqtt-automation-js?utm_source=github.com&utm_medium=referral&utm_content=leonardopn/mqtt-automation-js&utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8bd6cf220f4945418908d881361e60d2)](https://app.codacy.com/gh/leonardopn/mqtt-automation-js?utm_source=github.com&utm_medium=referral&utm_content=leonardopn/mqtt-automation-js&utm_campaign=Badge_Grade)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
