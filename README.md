@@ -8,19 +8,19 @@ Programa para execução de comandos recebidos por protocolo MQTT.
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/8bd6cf220f4945418908d881361e60d2)](https://app.codacy.com/gh/leonardopn/mqtt-automation-js?utm_source=github.com&utm_medium=referral&utm_content=leonardopn/mqtt-automation-js&utm_campaign=Badge_Grade)
 ![](https://img.shields.io/badge/version-v0.1.0-green)
-[![(Version)](https://img.shields.io/badge/license-GNU%20GPL%20version%203-green.svg?style=flat-square)](https://github.com/leonardopn/mqtt-automation-js/blob/dev/LICENSE.md)
+[![(Version)](https://img.shields.io/badge/license-GNU%20GPL%20version%203-green.svg?style=flat-square)](https://github.com/leonardopn/mqtt-automation-js/blob/dev/LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues/leonardopn/mqtt-automation-js)](https://github.com/leonardopn/mqtt-automation-js/issues)
 [![GitHub forks](https://img.shields.io/github/forks/leonardopn/mqtt-automation-js)](https://github.com/leonardopn/mqtt-automation-js/network)
 
 ##
 
 ### O quê é?
-O programa tem como intuíto fornecer uma interface gráfica que se comunica com o broker MQTT para recebimento de comandos que serão executados. Foi construído utilizando um frontend React + Electron e um backend Node. A concepção deste programa foi surgiu para automatizar operações rotineiras da minha vida. Eu realizo a integração do meu servidor MQTT com uma Alexa, e por isso, consigo executar comandos remotamente falando por exemplo: "Alexa, abrir calculadora". Porém, contanto que o programa se conecte com um broker MQTT, fica a cargo do usuário como serão enviados os comandos pelo broker.
+O programa tem como intuíto fornecer uma interface gráfica que se comunica com o broker MQTT para recebimento de comandos que serão executados. Foi construído utilizando um frontend React + Electron e um backend Node. A concepção deste programa surgiu para automatizar operações rotineiras da minha vida. Eu realizo a integração do meu servidor MQTT com uma Alexa, e por isso, consigo executar comandos remotamente falando por exemplo: "Alexa, abrir calculadora". Porém, contanto que o programa se conecte com um broker MQTT, fica a cargo do usuário como serão enviados os comandos pelo broker.
 
 ### Funcionamento
 O funcionamento é simples e não necessáriamente precisa ser feito nessa ordem, mas aconselho a fazer da seguinte forma:
 
-1º Vá nas configurações do programa e coloque os dados do servidor MQTT que o programa deve se conectar. Se a conexão estiver estabelecida seu porgrama já está apto a receber comandos
+1º Vá nas configurações do programa e coloque os dados do servidor MQTT que o programa deve se conectar. Se a conexão estiver estabelecida seu programa já está apto a receber comandos
 
 2º Para o programa ter o quê executar, é preciso criar comandos. Para isso, vá no menu de comandos e crie um comando dando nome (igual a mensagem recebida por MQTT) e o comandos que será executado.
 
