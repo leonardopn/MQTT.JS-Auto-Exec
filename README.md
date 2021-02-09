@@ -1,70 +1,66 @@
-# Getting Started with Create React App
+<p align="center">
+<img src="https://drive.google.com/uc?id=1hD9ohoKfZxoKnxYRK7XH8VeNKihLW5tJ" width="200"/>
+</p>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# MQTT.JS Auto Exec
 
-## Available Scripts
+Programa para execução de comandos recebidos por protocolo MQTT.
 
-In the project directory, you can run:
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8bd6cf220f4945418908d881361e60d2)](https://app.codacy.com/gh/leonardopn/mqtt-automation-js?utm_source=github.com&utm_medium=referral&utm_content=leonardopn/mqtt-automation-js&utm_campaign=Badge_Grade)
+![](https://img.shields.io/badge/version-v0.1.0-green)
+[![(Version)](https://img.shields.io/badge/license-GNU%20GPL%20version%203-green.svg?style=flat-square)](https://github.com/leonardopn/mqtt-automation-js/blob/dev/LICENSE.md)
+[![GitHub issues](https://img.shields.io/github/issues/leonardopn/mqtt-automation-js)](https://github.com/leonardopn/mqtt-automation-js/issues)
+[![GitHub forks](https://img.shields.io/github/forks/leonardopn/mqtt-automation-js)](https://github.com/leonardopn/mqtt-automation-js/network)
 
-### `yarn start`
+##
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### O quê é?
+O programa tem como intuíto fornecer uma interface gráfica que se comunica com o broker MQTT para recebimento de comandos que serão executados. Foi construído utilizando um frontend React + Electron e um backend Node. A concepção deste programa foi surgiu para automatizar operações rotineiras da minha vida. Eu realizo a integração do meu servidor MQTT com uma Alexa, e por isso, consigo executar comandos remotamente falando por exemplo: "Alexa, abrir calculadora". Porém, contanto que o programa se conecte com um broker MQTT, fica a cargo do usuário como serão enviados os comandos pelo broker.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Funcionamento
+O funcionamento é simples e não necessáriamente precisa ser feito nessa ordem, mas aconselho a fazer da seguinte forma:
 
-### `yarn test`
+1º Vá nas configurações do programa e coloque os dados do servidor MQTT que o programa deve se conectar. Se a conexão estiver estabelecida seu porgrama já está apto a receber comandos
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2º Para o programa ter o quê executar, é preciso criar comandos. Para isso, vá no menu de comandos e crie um comando dando nome (igual a mensagem recebida por MQTT) e o comandos que será executado.
 
-### `yarn build`
+3º Tendo a conexão com o broker MQTT e pelo menos um comando, seu programa já está apto a funcionar.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Imagens do funcionamento
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### Tela de comandos
+<img src="https://drive.google.com/uc?id=15j-gLOVq4Rw4o5VyTAVazVzglIUy0ZyJ" />
 
-### `yarn eject`
+#### Tela de configurações
+<img src="https://drive.google.com/uc?id=13JqncT2SvhR0e2fv3h4TCZg8jhfV5j1z" />
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+#### Tela dos logs
+<img src="https://drive.google.com/uc?id=1pllVJPY2TeZ8uDU6n73XGGUo-BsiABt6" />
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### Fechando o APP
+<img src="https://drive.google.com/uc?id=1lOOrPP8NGQuJ0MoEColGDOoKbO9_nE1U" />
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Instalação
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```Windows:``` Ainda sem instalador.
 
-## Learn More
+```Linux:``` Ainda sem instalador.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```MAC:``` Ainda sem instalador.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Meta
 
-### Code Splitting
+<center><b>-=Leonardo Petta do Nascimento=-</b></center></br> 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Facebook: [@leonardo.petta.nascimento](https://www.facebook.com/leonardo.petta.nascimento)</br> 
+Email: leonardocps9@protonmail.com
+</br> 
+Linkedin: [Leonardo Petta Do Nascimento](https://www.linkedin.com/in/leonardo-petta-do-nascimento-75674015b/)
 
-### Analyzing the Bundle Size
+Site pessoal: [leonardopetta.tech](https://leonardopetta.tech)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Distribuído sob a licença ```GNU GPL version v3``` . Consulte [```LICENCE```](https://github.com/leonardopn/mqtt-automation-js/blob/dev/LICENSE) para obter mais informações.
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
