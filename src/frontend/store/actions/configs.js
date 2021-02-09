@@ -18,6 +18,13 @@ export function getConfig() {
     }
 }
 
+export function updateConfig(data) {
+    return {
+        type: types.UPDATE_CONFIG,
+        payload: data
+    }
+}
+
 export function problemGetConfig(e) {
     return {
         type: types.PROBLEM_GET_CONFIG,

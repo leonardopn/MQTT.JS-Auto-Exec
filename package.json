@@ -1,30 +1,44 @@
 {
-  "name": "mqtt-automation-js",
+  "name": "mqtt-js-auto-exec",
   "version": "0.1.0",
   "private": true,
+  "description" : "Programa para execução de comandos recebidos por protocolo MQTT.",
   "main": "./public/electron.js",
+  "license": "GPL-3.0",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/leonardopn/mqtt-automation-js.git"
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "async-mqtt": "^2.6.1",
     "axios": "^0.21.1",
     "body-parse": "^0.1.0",
     "cors": "^2.8.5",
+    "electron-is-dev": "^1.2.0",
     "express": "^4.17.1",
     "lodash": "^4.17.20",
     "random-id": "^1.0.4",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-input-switch": "^2.2.2",
+    "react-loading": "^2.0.3",
     "react-redux": "^7.2.2",
     "react-scripts": "4.0.1",
+    "react-spring": "^8.0.27",
     "redux": "^4.0.5",
+    "socket.io": "^3.1.0",
+    "socket.io-client": "^3.1.0",
     "v8-compile-cache": "^2.2.0",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
     "start": "react-scripts start",
-    "dev": "concurrently -k \"BROWSER=none npm start\" \"electron .\"",
-    "build": "react-scripts build",
+    "dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\" ",
+    "build_w": "react-scripts build && electron-builder -w",
+    "build_l": "react-scripts build && electron-builder -l",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -48,7 +62,36 @@
   },
   "devDependencies": {
     "concurrently": "^5.3.0",
-    "electron": "^11.1.0",
-    "electron-dev": "^1.0.1"
+    "electron": "^11.2.3",
+    "electron-builder": "^22.9.1",
+    "electron-devtools-installer": "^3.1.1",
+    "wait-on": "^5.2.1"
+  },
+  "author": {
+    "name": "Leonardo Petta do Nascimento",
+    "email": "leonardo.petta@integrance.com.br",
+    "url": "https://www.linkedin.com/in/leonardo-petta-do-nascimento-75674015b/"
+  },
+  "homepage": "./",
+  "build": {
+    "appId": "br.com.leonardopetta.mqtt.js.auto.exec",
+    "productName": "MQTT.JS Auto Exec",
+    "copyright": "Copyright © 2020-2021 Leonardo Petta do Nascimento",
+    "mac": {
+      "category": "public.app-category.utilities"
+    },
+    "win": {
+      "icon": "./public/icon.ico"
+    },
+    "linux": {
+      "icon": "./public/icon.png"
+    },
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    }
   }
 }

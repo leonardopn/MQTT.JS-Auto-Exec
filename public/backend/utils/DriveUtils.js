@@ -1,8 +1,10 @@
-const fs = require("fs");
-const home = require('os').homedir();
-const Command = require("../model/entities/Command")
+const { configDefault } = require("../config/defaultConfigs.js");
 
-const folderApp = home + "/.mqtt_js/";
+const fs = require("fs");
+const { homedir } = require('os');
+const Command = require("../model/entities/Command.js");
+
+const folderApp = homedir + "/.mqtt_js/";
 
 function createFoldersApp() {
     return new Promise((resolve, reject) => {
@@ -146,8 +148,8 @@ function updateCommand(data) {
         if (data.id && data.command && data.name) {
             let valor = global.commands.get(data.id);
             if (valor) {
-                createFileCommand(data).then(valueNext => {//NOTE não utiliza padrão de payload pq ele já recebe um payload
-                    deleteCommand(data.id).then(_ => {
+                deleteCommand(data.id).then(_ => {
+                    createFileCommand(data).then(valueNext => {//NOTE não utiliza padrão de payload pq ele já recebe um payload
                         resolve(valueNext);
                     }).catch(error => {//NOTE não utiliza padrão de payload pq ele já recebe um payload
                         reject(error);
@@ -192,23 +194,36 @@ function executeCommand(id) {
 
 function getConfig() {
     return new Promise((resolve, reject) => {
-        fs.readFile(folderApp + "config.json", (error, data) => {
-            try {
-                if (error) {
-                    reject({ type: "ERRO", payload: error.message })
-                }
+        if (fs.existsSync(folderApp + "config.json")) {
+            fs.readFile(folderApp + "config.json", (error, data) => {
+                try {
+                    if (error) {
+                        reject({ type: "ERRO", payload: error.message })
+                    }
 
-                let json = JSON.parse(data);
-                if (json.topic && json.serverIp && json.user && json.pass && json.startup ? true : true) {
-                    resolve({ type: "OK", payload: json })
+                    let json = JSON.parse(data);
+                    if (json.topic && json.serverIp && json.user && json.pass && json.startup ? true : true) {
+                        resolve({ type: "OK", payload: json })
+                    }
+                    else {
+                        reject({ type: "WARNING", payload: `WARNING - Informações faltantes` });
+                    }
+                } catch (e) {
+                    reject({ type: "ERRO", payload: e.message })
                 }
-                else {
-                    reject({ type: "WARNING", payload: `WARNING - Informações faltantes` });
-                }
-            } catch (e) {
-                reject({ type: "ERRO", payload: e.message })
-            }
-        });
+            });
+        }
+        else {
+            updateConfig(configDefault).then(value => {
+                getConfig().then(value => {
+                    resolve(value);
+                }).catch(err => {
+                    reject(err);
+                });
+            }).catch(error => {
+                reject({ type: "ERRO", payload: error.message })
+            })
+        }
     })
 }
 

@@ -1,17 +1,25 @@
 import React, { useState } from "react";
-import Card from "../card/Card";
 import axios from "axios";
 import { connect } from "react-redux";
 import { getCommands } from "../../store/actions/commandsAction";
-import { setLog } from "../../../backend/utils/LogUtils"
+import { setLog } from "../../scripts/LogUtils";
+import DivFlex from "../divFlex/DivFlex";
+import "./command.css";
+import { useSpring, animated as a } from 'react-spring';
 
 const Command = props => {
     const [inputValueName, setValueInputName] = useState(props.name);
     const [inputValueCommand, setValueInputCommand] = useState(props.command);
     const [type, setType] = useState(props.type);
 
+    const { transform, opacity } = useSpring({
+        opacity: type === "CREATED" || type === "NEW" ? 1 : 0,
+        transform: `perspective(1000px) rotateX(${type === "CREATED" || type === "NEW" ? 0 : 0}deg)`,
+        config: { mass: 1, tension: 1000, friction: 50 }
+    })
+
     function closeNewCommand() {
-        props.deleteNewCommand("");
+        props.closeNewCommand();
     }
 
     function resetValuesUpdate() {
@@ -26,9 +34,9 @@ const Command = props => {
             command: inputValueCommand
         };
         axios.post("http://localhost:8888/addcommand", data).then(_ => {
-            props.getCommands();
-            props.deleteNewCommand("");
+            closeNewCommand();
             setLog(`Comando "${data.name}" criado!`);
+            props.getCommands();
         }).catch(error => {
             setLog(JSON.parse(error.request.response).payload);
         })
@@ -51,7 +59,11 @@ const Command = props => {
         };
 
         axios.put("http://localhost:8888/updatecommand", data).then(_ => {
-            props.getCommands();
+            setType("CREATED");
+            setTimeout(() => {
+                props.getCommands();
+            }, 400)
+
             setLog(`Comando "${props.name}" atualizado!`);
         }).catch(error => {
             setLog(JSON.parse(error.request.response).payload);
@@ -60,9 +72,8 @@ const Command = props => {
 
     function testCommand() {
         axios.get("http://localhost:8888/execCommand/" + props.id).then(response => {
-            setLog(`Comando "${props.name}" executado! Saída: ${response.data}`);  
+            setLog(`Comando "${props.name}" executado! Saída: ${response.data}`);
         }).catch(error => {
-            console.log(error);
             setLog(JSON.parse(error.request.response).payload);
         });
     }
@@ -70,53 +81,58 @@ const Command = props => {
     switch (type) {
         case "NEW":
             return (
-                <Card class="intern">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td><b><label htmlFor={"nameComand" + props.id}>Título: </label></b></td>
-                                <td> <input type="text" name={"nameComand" + props.id} defaultValue={inputValueName} className="inputDefault" onChange={e => setValueInputName(e.target.value)}></input></td>
-                            </tr>
-                            <tr>
-                                <td><b><label htmlFor={"scriptComand" + props.id}>Comando: </label></b></td>
-                                <td>  <input type="text" name={"scriptComand" + props.id} defaultValue={inputValueCommand} className="inputDefault" onChange={e => setValueInputCommand(e.target.value)}></input></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <button onClick={_ => addCommand()}>Criar</button>
-                    <button onClick={_ => closeNewCommand()}>X</button>
-                </Card>
+                <div className="divCommandIntern">
+                    <DivFlex type="Center">
+                        <b><label htmlFor={"nameComand" + props.id}>Título: </label></b>
+                        <input type="text" name={"nameComand" + props.id} defaultValue={inputValueName} className="inputDefault" onChange={e => setValueInputName(e.target.value)}></input>
+                    </DivFlex>
+                    <DivFlex type="Center">
+                        <b><label htmlFor={"scriptComand" + props.id}>Comando: </label></b>
+                        <input type="text" name={"scriptComand" + props.id} defaultValue={inputValueCommand} className="inputDefault" onChange={e => setValueInputCommand(e.target.value)}></input>
+
+                    </DivFlex>
+                    <br></br>
+                    <DivFlex type="Center">
+                        <button className="buttonUpdate buttonOfCommand" onClick={_ => addCommand()}>Criar</button>
+                        <button className="buttonCancel buttonOfCommand" onClick={_ => closeNewCommand()}>Cancelar</button>
+                    </DivFlex>
+                </div>
             );
         case "UPDATE":
             return (
-                <Card class="intern">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td><b><label htmlFor={"nameComand" + props.id}>Título: </label></b></td>
-                                <td> <input type="text" name={"nameComand" + props.id} defaultValue={inputValueName} className="inputDefault" onChange={e => setValueInputName(e.target.value)}></input></td>
-                            </tr>
-                            <tr>
-                                <td><b><label htmlFor={"scriptComand" + props.id}>Comando: </label></b></td>
-                                <td>  <input type="text" name={"scriptComand" + props.id} defaultValue={inputValueCommand} className="inputDefault" onChange={e => setValueInputCommand(e.target.value)}></input></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <button onClick={_ => updateCommand()}>Atualizar</button>
-                    <button onClick={_ => resetValuesUpdate()}>Cancelar</button>
-                </Card>
+                <a.div className="divCommandIntern" style={{ opacity: opacity.interpolate(o => 1 - o), transform: transform.interpolate(t => `${t} rotateX(180deg)`) }} >
+                    <div id="divSpringRotacionada">
+                        <DivFlex type="Center">
+                            <h2>ID: {props.id}</h2>
+                        </DivFlex>
+                        <DivFlex>
+                            <input placeholder="Insira o nome do comando." type="text" name={"nameComand" + props.id} defaultValue={inputValueName} className="inputDefault" onChange={e => setValueInputName(e.target.value)}></input>
+                            <input placeholder="Insira o comando que será executado" type="text" name={"scriptComand" + props.id} defaultValue={inputValueCommand} className="inputDefault" onChange={e => setValueInputCommand(e.target.value)}></input>
+                        </DivFlex>
+                        <br></br>
+                        <DivFlex type="Center">
+                            <button className="buttonCancel" onClick={_ => resetValuesUpdate()}>Cancelar</button>
+                            <button className="buttonUpdate" onClick={_ => updateCommand()}>Atualizar</button>
+                        </DivFlex>
+                    </div>
+                </a.div>
             )
         default:
             return (
-                <Card class="intern">
-                    <p>Id: {props.id}</p>
-                    <p>Título: {props.name}</p>
-                    <p>Comando: {props.command}</p>
-                    <p>Pasta: {props.folder}</p>
-                    <button onClick={_ => removeCommand()}>Excluir</button>
-                    <button onClick={_ => testCommand()}>Testar comando</button>
-                    <button onClick={_ => setType("UPDATE")}>Atualizar</button>
-                </Card>
+                <a.div className="divCommandIntern" style={{ opacity, transform }} >
+                    <DivFlex type="Center">
+                        <h2>ID: {props.id}</h2>
+                    </DivFlex>
+                    <p><b>Título:</b> {props.name}</p>
+                    <p><b>Comando:</b> {props.command}</p>
+                    <p><b>Localização:</b> {props.folder}</p>
+                    <br></br>
+                    <DivFlex type="Center">
+                        <button className="buttonCancel" onClick={_ => removeCommand()}>Excluir</button>
+                        <button className="buttonTest" onClick={_ => testCommand()}>Executar</button>
+                        <button className="buttonUpdate" onClick={_ => setType("UPDATE")}>Atualizar</button>
+                    </DivFlex>
+                </a.div>
             );
     }
 }

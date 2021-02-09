@@ -1,4 +1,11 @@
 .divFlex {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
+}
+
+.divFlexCenter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

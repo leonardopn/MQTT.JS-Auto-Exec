@@ -1,0 +1,36 @@
+.divCommandIntern {
+    border-left  : 15px solid #5162ff;
+    border-bottom: 1px solid #5162ff;
+    border-top   : 1px solid #5162ff;
+    border-right : 1px solid #5162ff;
+    border-radius: 10px;
+    padding      : 15px;
+    margin       : 25px;
+    box-shadow   : 0px 0px 10px -5px #000000;
+    transition   : 0.5s;
+}
+
+.divCommandIntern:hover {
+    box-shadow: 0px 0px 15px -5px #000000;
+    transition: 0.5s;
+}
+
+#divSpringRotacionada {
+    transform: rotateX(180deg);
+}
+
+.buttonUpdate.buttonOfCommand {
+    border-top-left-radius   : 50px;
+    border-bottom-left-radius: 50px;
+    border-top-right-radius   : 0px;
+    border-bottom-right-radius: 0px;
+    flex:1
+}
+
+.buttonCancel.buttonOfCommand {
+    border-top-left-radius   : 0px;
+    border-bottom-left-radius: 0px;
+    border-top-right-radius   : 50px;
+    border-bottom-right-radius: 50px;
+    flex:1
+}

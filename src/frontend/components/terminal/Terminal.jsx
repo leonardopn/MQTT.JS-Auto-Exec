@@ -5,15 +5,20 @@ import { connect } from "react-redux"
 const Terminal = props => {
 
     React.useEffect(() => {
-        function autoScroll(){
-            const textarea = document.getElementById('textAreaTerminal');
-            textarea.scrollTop = textarea.scrollHeight;
+        let isMounted = true;
+        if (isMounted) {
+            function autoScroll() {
+                const textarea = document.getElementById('textAreaTerminal');
+                textarea.scrollTop = textarea.scrollHeight;
+            }
+            autoScroll();
         }
-        autoScroll();
-    }, []);
+        return () => { isMounted = false };
+    }, [props.textTextArea]);
+
 
     return (
-        <textarea id="textAreaTerminal" defaultValue={props.textTextArea} readOnly>
+        <textarea id="textAreaTerminal" value={props.textTextArea} readOnly>
         </textarea>
     )
 }

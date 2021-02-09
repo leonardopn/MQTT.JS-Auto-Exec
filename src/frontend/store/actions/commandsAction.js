@@ -14,8 +14,8 @@ function getCommandsFromAPI() {
 
             if (arrayTemp.length < 1) {
                 arrayTemp.push(
-                    <DivFlex key="cat_empty_commands">
-                        <img style={{ width: "450px" }} src={cat_empty_folder} alt="cat_folder_empty_gif"/>
+                    <DivFlex type="Center" key="cat_empty_commands">
+                        <img style={{ width: "450px" }} src={cat_empty_folder} alt="cat_folder_empty_gif" />
                         <h2>Sem comandos por aqui... <img style={{ width: "25px" }} src="https://emojitool.com/img/twitter/twemoji-13.0.1/crying-cat-112.png" alt="cat_folder_empty_gif"></img></h2>
                     </DivFlex>
                 )
@@ -24,12 +24,10 @@ function getCommandsFromAPI() {
         }).catch(error => {
             arrayTemp.length = 0;
             arrayTemp.push(
-                <DivFlex key="cat_empty_commands">
-                    <img style={{ width: "450px" }} src={cat_empty_folder} alt="cat_folder_empty_gif"/>
-                    <div>
-                        <h2>Algum erro ocorreu... <img style={{ width: "25px" }} src="https://emojitool.com/img/twitter/twemoji-13.0.1/crying-cat-112.png" alt="cat_folder_empty_gif"></img></h2>
-                        <p>Erro: {error.message}</p>
-                    </div>
+                <DivFlex type="Center" key="cat_empty_commands">
+                    <img style={{ width: "100px" }} src={cat_empty_folder} alt="cat_folder_empty_gif" />
+                    <h2>Algum erro ocorreu... <img style={{ width: "25px" }} src="https://emojitool.com/img/twitter/twemoji-13.0.1/crying-cat-112.png" alt="cat_folder_empty_gif"></img></h2>
+                    <p>Erro: {error.message}</p>
                 </DivFlex>
             )
             resolve(arrayTemp);

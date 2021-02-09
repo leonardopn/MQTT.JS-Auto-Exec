@@ -1,47 +1,131 @@
 require('v8-compile-cache');
-
+const startServer = require("./backend/server.js");
+const path = require('path');
 const electron = require('electron');
+const nativeImage = electron.nativeImage;
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
-const startServer = require('../src/backend/server.js')
+const isDev = require('electron-is-dev');
+const os = require('os');
+const icon = nativeImage.createFromPath(os.platform() === "linux" ? __dirname + '/icon.png' : __dirname + '/icon.ico');
 
 let mainWindow;
+
+function createAbout() {
+    const about = new BrowserWindow({
+        width: 800, height: 600, webPreferences: {
+            nodeIntegration: true,
+        },
+        icon: icon
+    });
+    if (!isDev) {
+        about.loadURL(`file://${path.resolve(__dirname, '..', 'build', 'about.html')}`)
+    }
+    else {
+        about.loadURL(`file://${path.resolve(__dirname, 'about.html')}`)
+    }
+    return about;
+}
 
 function createWindow() {
     startServer().then(value => {
         console.log("Comandos carregados: " + value.payload.size + "\n");
-        mainWindow = new BrowserWindow({ width: 800, height: 600 });
-        mainWindow.setMaximumSize(800, 600)
-        mainWindow.setMinimumSize(800, 600)
-
-        mainWindow.loadURL('http://localhost:3000');
-
-        mainWindow.webContents.openDevTools();
-
-        mainWindow.on('closed', function () {
-            mainWindow = null
+        mainWindow = new BrowserWindow({
+            width: 800, height: 600, webPreferences: {
+                nodeIntegration: true,
+            },
+            icon: icon
         });
+
+        electron.Menu.setApplicationMenu(
+            electron.Menu.buildFromTemplate(
+                [{
+                    label: 'Sair',
+                    click: function () {
+                        process.exit(0);
+                    }
+                },
+                {
+                    label: 'Ajuda',
+                    submenu: [{
+                        role: 'about', click: () => {
+                            createAbout().show();
+                        }
+                    },
+                    ],
+                }]
+            )
+        )
+
+        tray = new electron.Tray(icon);
+        const contextMenu = electron.Menu.buildFromTemplate([
+            {
+                label: 'MQTT.JS Auto Exec',
+                enabled: false
+            },
+            {
+                label: 'Abrir',
+                click: () => {
+                    mainWindow.show(true);
+                }
+            },
+            {
+                label: 'About',
+                click: () => {
+                    createAbout().show();
+                }
+            },
+            {
+                label: 'Fechar',
+                click: function () {
+                    process.exit(0);
+                }
+            }
+        ])
+        tray.setToolTip('MQTT.JS Auto Exec');
+        tray.setTitle('MQTT.JS Auto Exec');
+        tray.setContextMenu(contextMenu)
+
+        mainWindow.setMaximumSize(800, 600);
+        mainWindow.setMinimumSize(800, 600);
+
+        mainWindow.on('minimize', function (event) {
+            event.preventDefault();
+            mainWindow.hide();
+        });
+
+        mainWindow.on('close', function (event) {
+            if (!app.isQuiting) {
+                event.preventDefault();
+                mainWindow.hide();
+            }
+            return false;
+        })
+
+        if (isDev) {
+            const { default: installExtension, REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } = require('electron-devtools-installer');
+            [REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS].forEach(extension => {
+                installExtension(extension)
+                    .then((name) => console.log(`Added Extension:  ${name}`))
+                    .catch((err) => console.log('An error occurred: ', err));
+            })
+            mainWindow.loadURL('http://localhost:3000');
+            mainWindow.webContents.openDevTools();
+        }
+        else {
+            mainWindow.loadURL(`file://${path.resolve(__dirname, '..', 'build', 'index.html')}`)
+        }
+
     }).catch(error => {
+        console.log(error);
         if (error.type === "ERRO") {
             console.log(error.payload.message);
         }
         if (error.type === "WARNING") {
             console.log("Pelo menos um arquivo de comando está fora do padrão! Por favor, arrume: ", error.payload);
         }
-        process.exit(0)
+        process.exit(0);
     });
 }
 
 app.on('ready', createWindow);
-
-app.on('window-all-closed', function () {
-    if (process.platform !== 'darwin') {
-        app.quit()
-    }
-});
-
-app.on('activate', function () {
-    if (mainWindow === null) {
-        createWindow()
-    }
-});
