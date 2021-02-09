@@ -4,7 +4,11 @@
   "private": true,
   "description" : "Programa para execução de comandos recebidos por protocolo MQTT.",
   "main": "./public/electron.js",
-  "license": "MIT",
+  "license": "GPL-3.0",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/leonardopn/mqtt-automation-js.git"
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
