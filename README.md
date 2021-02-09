@@ -43,11 +43,11 @@ O funcionamento é simples e não necessáriamente precisa ser feito nessa ordem
 
 ## Instalação
 
-```Windows:``` Ainda sem instalador.
+```Windows:``` [Download V0.1.0](https://drive.google.com/file/d/1Ak3pxA5Pm1_NoyYKuf-e6bJQ-tYtaBcj/view?usp=sharing)
 
-```Linux:``` Ainda sem instalador.
+```Linux:``` [Download V0.1.0](https://drive.google.com/file/d/16brABpVGPONt9L9QRuaEhBfz7ibAMPnp/view?usp=sharing)
 
-```MAC:``` Ainda sem instalador.
+```MAC:``` SEM PREVISÃO.
 
 ## Meta
 
