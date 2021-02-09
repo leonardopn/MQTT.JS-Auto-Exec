@@ -11,6 +11,22 @@ const icon = nativeImage.createFromPath(os.platform() === "linux" ? __dirname + 
 
 let mainWindow;
 
+function createAbout() {
+    const about = new BrowserWindow({
+        width: 800, height: 600, webPreferences: {
+            nodeIntegration: true,
+        },
+        icon: icon
+    });
+    if (!isDev) {
+        about.loadURL(`file://${path.resolve(__dirname, '..', 'build', 'about.html')}`)
+    }
+    else {
+        about.loadURL(`file://${path.resolve(__dirname, 'about.html')}`)
+    }
+    return about;
+}
+
 function createWindow() {
     startServer().then(value => {
         console.log("Comandos carregados: " + value.payload.size + "\n");
@@ -21,7 +37,27 @@ function createWindow() {
             icon: icon
         });
 
-        tray = new electron.Tray(icon)
+        electron.Menu.setApplicationMenu(
+            electron.Menu.buildFromTemplate(
+                [{
+                    label: 'Sair',
+                    click: function () {
+                        process.exit(0);
+                    }
+                },
+                {
+                    label: 'Ajuda',
+                    submenu: [{
+                        role: 'about', click: () => {
+                            createAbout().show();
+                        }
+                    },
+                    ],
+                }]
+            )
+        )
+
+        tray = new electron.Tray(icon);
         const contextMenu = electron.Menu.buildFromTemplate([
             {
                 label: 'MQTT.JS Auto Exec',
@@ -34,21 +70,9 @@ function createWindow() {
                 }
             },
             {
-                label: 'Sobre',
+                label: 'About',
                 click: () => {
-                    const about = new BrowserWindow({
-                        width: 800, height: 600, webPreferences: {
-                            nodeIntegration: true,
-                        },
-                        icon: icon
-                    });
-                    if (!isDev) {
-                        about.loadURL(`file://${path.resolve(__dirname, '..', 'build', 'about.html')}`)
-                    }
-                    else {
-                        about.loadURL(`file://${path.resolve(__dirname, 'about.html')}`)
-                    }
-                    about.show();
+                    createAbout().show();
                 }
             },
             {
