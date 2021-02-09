@@ -6,11 +6,11 @@
 
 Programa para execução de comandos recebidos por protocolo MQTT.
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8bd6cf220f4945418908d881361e60d2)](https://app.codacy.com/gh/leonardopn/mqtt-automation-js?utm_source=github.com&utm_medium=referral&utm_content=leonardopn/mqtt-automation-js&utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8bd6cf220f4945418908d881361e60d2)](https://app.codacy.com/gh/leonardopn/MQTT.JS-Auto-Exec?utm_source=github.com&utm_medium=referral&utm_content=leonardopn/MQTT.JS-Auto-Exec&utm_campaign=Badge_Grade)
 ![](https://img.shields.io/badge/version-v0.1.0-green)
-[![(Version)](https://img.shields.io/badge/license-GNU%20GPL%20version%203-green.svg?style=flat-square)](https://github.com/leonardopn/mqtt-automation-js/blob/master/LICENSE)
-[![GitHub issues](https://img.shields.io/github/issues/leonardopn/mqtt-automation-js)](https://github.com/leonardopn/mqtt-automation-js/issues)
-[![GitHub forks](https://img.shields.io/github/forks/leonardopn/mqtt-automation-js)](https://github.com/leonardopn/mqtt-automation-js/network)
+[![(Version)](https://img.shields.io/badge/license-GNU%20GPL%20version%203-green.svg?style=flat-square)](https://github.com/leonardopn/MQTT.JS-Auto-Exec/blob/master/LICENSE)
+[![GitHub issues](https://img.shields.io/github/issues/leonardopn/MQTT.JS-Auto-Exec)](https://github.com/leonardopn/MQTT.JS-Auto-Exec/issues)
+[![GitHub forks](https://img.shields.io/github/forks/leonardopn/MQTT.JS-Auto-Exec)](https://github.com/leonardopn/MQTT.JS-Auto-Exec/network)
 
 ##
 
@@ -60,7 +60,7 @@ Linkedin: [Leonardo Petta Do Nascimento](https://www.linkedin.com/in/leonardo-pe
 
 Site pessoal: [leonardopetta.tech](https://leonardopetta.tech)
 
-Distribuído sob a licença ```GNU GPL version v3``` . Consulte [```LICENCE```](https://github.com/leonardopn/mqtt-automation-js/blob/master/LICENSE) para obter mais informações.
+Distribuído sob a licença ```GNU GPL version v3``` . Consulte [```LICENCE```](https://github.com/leonardopn/MQTT.JS-Auto-Exec/blob/master/LICENSE) para obter mais informações.
 
 ---
 

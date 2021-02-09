@@ -7,7 +7,7 @@
   "license": "GPL-3.0",
   "repository": {
     "type" : "git",
-    "url" : "https://github.com/leonardopn/mqtt-automation-js.git"
+    "url" : "https://github.com/leonardopn/MQTT.JS-Auto-Exec.git"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
