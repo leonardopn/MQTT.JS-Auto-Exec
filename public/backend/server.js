@@ -23,7 +23,6 @@ const porta = 8888;
 function loadDb() {
     return new Promise((resolve, reject) => {
         createFoldersApp().then(value => {
-            console.log(value.payload);
             loadCommands().then(value => {
                 global.commands = value.payload;
                 resolve(value)

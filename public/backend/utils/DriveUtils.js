@@ -74,7 +74,6 @@ function createFileCommand(data) {
             let id = randomId(5, 'aA0');
 
             while (global.commands.get(id)) {
-                console.log(id);
                 id = randomId(5, "aA0");
             }
 

@@ -22,15 +22,11 @@ function achaComandoEExecuta(comando) {
 }
 
 async function subscribeTopic(params) {
-    try {
-        if (params.client.connected) {
-            contadorReconnect = 1;
-            io.sockets.emit("LOG_TERMINAL", `Conexão ao servidor: ${params.serverIp} feita com sucesso!`);
-            io.sockets.emit("STATUS_MQTT", true);
-            params.client.subscribe(params.topic);
-        }
-    } catch (e) {
-        console.log(e.stack);
+    if (params.client.connected) {
+        contadorReconnect = 1;
+        io.sockets.emit("LOG_TERMINAL", `Conexão ao servidor: ${params.serverIp} feita com sucesso!`);
+        io.sockets.emit("STATUS_MQTT", true);
+        params.client.subscribe(params.topic);
     }
 }
 

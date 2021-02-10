@@ -28,8 +28,7 @@ function createAbout() {
 }
 
 function createWindow() {
-    startServer().then(value => {
-        console.log("Comandos carregados: " + value.payload.size + "\n");
+    startServer().then(_ => {
         mainWindow = new BrowserWindow({
             width: 800, height: 600, webPreferences: {
                 nodeIntegration: true,
@@ -104,11 +103,7 @@ function createWindow() {
 
         if (isDev) {
             const { default: installExtension, REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } = require('electron-devtools-installer');
-            [REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS].forEach(extension => {
-                installExtension(extension)
-                    .then((name) => console.log(`Added Extension:  ${name}`))
-                    .catch((err) => console.log('An error occurred: ', err));
-            })
+            [REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS].forEach(extension => installExtension(extension));
             mainWindow.loadURL('http://localhost:3000');
             mainWindow.webContents.openDevTools();
         }
@@ -116,14 +111,7 @@ function createWindow() {
             mainWindow.loadURL(`file://${path.resolve(__dirname, '..', 'build', 'index.html')}`)
         }
 
-    }).catch(error => {
-        console.log(error);
-        if (error.type === "ERRO") {
-            console.log(error.payload.message);
-        }
-        if (error.type === "WARNING") {
-            console.log("Pelo menos um arquivo de comando está fora do padrão! Por favor, arrume: ", error.payload);
-        }
+    }).catch(_ => {
         process.exit(0);
     });
 }
