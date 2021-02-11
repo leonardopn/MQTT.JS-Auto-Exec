@@ -2,18 +2,21 @@ const { configDefault } = require("../config/defaultConfigs.js");
 
 const fs = require("fs");
 const { homedir } = require('os');
+const path = require("path");
 const Command = require("../model/entities/Command.js");
 
-const folderApp = homedir + "/.mqtt_js/";
+const MAIN_PATH = path.resolve(homedir(), ".mqtt_js");
+const COMMANDS_PATH = path.resolve(MAIN_PATH, "commands");
+const CONFIG_FILE = path.resolve(MAIN_PATH, "config.json");
 
 function createFoldersApp() {
     return new Promise((resolve, reject) => {
-        if (!fs.existsSync(folderApp)) {
-            fs.mkdir(folderApp, e => {
+        if (!fs.existsSync(MAIN_PATH)) {
+            fs.mkdir(MAIN_PATH, e => {
                 if (e) {
                     reject({ type: "ERRO", payload: e })
                 }
-                fs.mkdir(folderApp + "commands/", error => {
+                fs.mkdir(COMMANDS_PATH, error => {
                     if (error) {
                         reject({ type: "ERRO", payload: error })
                     }
@@ -22,8 +25,8 @@ function createFoldersApp() {
             })
         }
         else {
-            if (!fs.existsSync(folderApp + "commands/")) {
-                fs.mkdir(folderApp + "commands/", error => {
+            if (!fs.existsSync(COMMANDS_PATH)) {
+                fs.mkdir(COMMANDS_PATH, error => {
                     if (error) {
                         reject({ type: "ERRO", payload: error })
                     }
@@ -37,16 +40,15 @@ function createFoldersApp() {
     })
 }
 
-
 function loadCommands() {
     return new Promise((resolve, reject) => {
         try {
-            let commands = new Map();
-            let files = fs.readdirSync(folderApp + "commands/");
-            let arrayErrados = [];
-
+            const commands = new Map();
+            const files = fs.readdirSync(COMMANDS_PATH);
+            const arrayErrados = [];
             files.forEach(file => {
-                let fileRead = fs.readFileSync(folderApp + "commands/" + file);
+                const fileRead = fs.readFileSync(path.resolve(COMMANDS_PATH, file));
+
                 try {
                     let json = JSON.parse(fileRead);
                     if (json.id && json.command && json.name && json.path) {
@@ -81,9 +83,9 @@ function createFileCommand(data) {
                 return (e.command === data.command || e.name === data.name);
             })[0];
 
-            let file = folderApp + "commands/" + data.name + ".json";
+            const file = path.resolve(COMMANDS_PATH, data.name + ".json");
 
-            let command = new Command(id, data.command, data.name, file);
+            const command = new Command(id, data.command, data.name, file);
 
             if (!element) {
                 if (id && data.command && data.name && file) {
@@ -121,7 +123,7 @@ function getCommands() {
 function deleteCommand(id) {
     return new Promise((resolve, reject) => {
         try {
-            let valor = global.commands.get(id);
+            const valor = global.commands.get(id);
 
             if (valor) {
                 fs.unlink(valor.path, error => {
@@ -145,10 +147,10 @@ function deleteCommand(id) {
 function updateCommand(data) {
     return new Promise((resolve, reject) => {
         if (data.id && data.command && data.name) {
-            let valor = global.commands.get(data.id);
-            if (valor) {
-                deleteCommand(data.id).then(_ => {
-                    createFileCommand(data).then(valueNext => {//NOTE não utiliza padrão de payload pq ele já recebe um payload
+            const valor = global.commands.get(data.id);
+            if (valor) {//FIXME Fazer um jeito correto de atualizar e não criar depois apagar, isso ocasiona um erro de lógica
+                createFileCommand(data).then(valueNext => {//NOTE não utiliza padrão de payload pq ele já recebe um payload
+                    deleteCommand(data.id).then(_ => {
                         resolve(valueNext);
                     }).catch(error => {//NOTE não utiliza padrão de payload pq ele já recebe um payload
                         reject(error);
@@ -174,7 +176,7 @@ function updateCommand(data) {
 function executeCommand(id) {
     return new Promise((resolve, reject) => {
         try {
-            let command = global.commands.get(id);
+            const command = global.commands.get(id);
             if (command) {
                 command.execCommand().then(value => {//NOTE não utiliza padrão de payload pq ele já recebe um payload
                     resolve(value);
@@ -193,14 +195,14 @@ function executeCommand(id) {
 
 function getConfig() {
     return new Promise((resolve, reject) => {
-        if (fs.existsSync(folderApp + "config.json")) {
-            fs.readFile(folderApp + "config.json", (error, data) => {
+        if (fs.existsSync(CONFIG_FILE)) {
+            fs.readFile(CONFIG_FILE, (error, data) => {
                 try {
                     if (error) {
                         reject({ type: "ERRO", payload: error.message })
                     }
 
-                    let json = JSON.parse(data);
+                    const json = JSON.parse(data);
                     if (json.topic && json.serverIp && json.user && json.pass && json.startup ? true : true) {
                         resolve({ type: "OK", payload: json })
                     }
@@ -228,7 +230,7 @@ function getConfig() {
 
 function updateConfig(data) {
     return new Promise((resolve, reject) => {
-        fs.writeFile(folderApp + "config.json", JSON.stringify(data), error => {
+        fs.writeFile(CONFIG_FILE, JSON.stringify(data), error => {
             if (error) {
                 reject({ type: "ERRO", payload: error })
             }
