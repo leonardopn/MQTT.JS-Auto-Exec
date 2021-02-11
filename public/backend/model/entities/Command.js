@@ -1,5 +1,3 @@
-const { exec } = require('child_process');
-
 module.exports = class Command {
     constructor(id, command, name, path) {
         this.id = id;
@@ -10,7 +8,7 @@ module.exports = class Command {
 
     execCommand() {
         return new Promise((resolve, reject) => {
-            exec(this.command, (erro, saida, saidaErro) => {
+            require('child_process').execFile(this.command, (erro, saida, saidaErro) => {
                 if (erro) {
                     reject({ type: "ERRO", payload: erro.message + "\nSaída de erro da execução: " + saidaErro })
                     return;
