@@ -56,7 +56,7 @@ function createWindow() {
             )
         )
 
-        tray = new electron.Tray(icon);
+        const tray = new electron.Tray(icon);
         const contextMenu = electron.Menu.buildFromTemplate([
             {
                 label: 'MQTT.JS Auto Exec',
